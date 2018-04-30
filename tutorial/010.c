@@ -9,7 +9,7 @@ int addTwoInts(int num1, int num2){
 
 int chageVariables(){
     int age = 10;
-    globalVar =20;
+    globalVar = 20;
 }
 
 
