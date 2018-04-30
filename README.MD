@@ -69,6 +69,8 @@ printf("What is your name? ");
 gets(name); //接受键盘输入，但不检查输入内容是否超过上面的50
 puts("Hi"); //会自动添加换行符
 puts(name);
+puts()函数接受一个字符串,等于打印出这个字符串，另外尾部添加一个换行符
+
 
 //使用fgets更好
  char name[50];
@@ -82,8 +84,8 @@ puts(name);
  //
 ```
 
-putchar和print差不多
-puts()函数接受一个字符串,等于打印出这个字符串，另外尾部添加一个换行符
+putchar(char )和print差不多,但只接受一个char
 
 ## 函数声明只要放在头部，具体的实现放在main后面也没问题
 只要在main前面声明了函数(返回值，函数名，入参)，把函数实现放在后面也没问题
+
