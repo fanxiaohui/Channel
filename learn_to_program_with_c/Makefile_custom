@@ -1,0 +1,5 @@
+default: x.txt.end
+
+%.txt.end: %.txt
+	cat $^ | tail -n 10 > $@
+

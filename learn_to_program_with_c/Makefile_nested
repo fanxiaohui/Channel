@@ -1,0 +1,4 @@
+
+objects= a.o b.o c.o d.o b_nested.o
+nested: nested.c $(objects)
+	clang $^ -o $@
