@@ -7,61 +7,6 @@
 运行方式
 ./002
 
-### 字符串
-c语言中字符串有两种声明形式
-
-第一种是直接声明一个char array[]
-> char greeting[] = "Hello";
-其实编译器会在初始化数组的时候，自动给尾巴加上一个'\0'.注意此时的greeting也是一个指向数组头部的指针
-
-```c
-char a[] = "Sam";
-printf("sizeof sam is %d: \n",sizeof(a)); 
-// sizeof sam is 4:
-```
-
-第二种是使用指针直接指向字符串
-> char *str = "这是一段字符";
-printf("%s\n", str); //直接输出字符串
-
-
-这两种其实很相似
-```c
-char *ptr_string = "helloworld";
-printf("print the char pointer %c",ptr_string[1]);
-printf("\n");
-printf("print the string %s",ptr_string);
-```
-print the char pointer e
-print the string helloworld
-甚至可以这样直接把指针当作数组来根据下标获得元素，虽然很危险
-
-
-最好不要使用global variables，而是使用指针
-
-获得变量a的地址使用&a，获得a指针指向的值，使用*a
-对于非指针类型的，比方说int ,long这些，获得其内存地址的方式是&a；
-对于指针类型的，直接printf("%s",a); 就可以了
-
-error: assignment to expression with array type
-编译器就会爆出这样的错误
-因为纵然数组名和指针有很多的相似处，但是指针是一个**变量**，数组名不是变量。
-所以想要修改一个字符串的内容，需要使用strcpy函数，或者使用字符串。
-
-另外，使用数组创建的字符串尾部会被编译器自动添加yige "\0"，使用指针的不会。
-```c
-const char  firstname[] = "bobby";
-const char* lastname = "eraserhead";
-printf("firstname size is: %d and lastname size is : %d \n", 
-sizeof(firstname) ,
-sizeof(lastname));
-printf("length of first str is %d and the second is %d \n",
-strlen(firstname),
-strlen(lastname));
-```
-firstname size is: 6 and lastname size is : 4
-length of first str is 5 and the second is 10
-所以说数组会自动在尾部添加一个NULL，指针不会。但是strlen函数很好的处理了这些东西。是的，空格不是'\0'，空字符不等于空格字符，空格字符的ASCII码值为32而不是0
 
 ### 数组
 数组中的数据类型只能有一种
@@ -165,60 +110,8 @@ putchar(char )和print差不多,但只接受一个char
 ## 函数声明只要放在头部，具体的实现放在main后面也没问题
 只要在main前面声明了函数(返回值，函数名，入参)，把函数实现放在后面也没问题
 
-## 文件读写
-```c
-
-// 打开文件用fopen，接受两个参数
-FILE *pFile; //FILE是stdio文件中定义的变量
-
-pFile = fopen("./tmp/name.bin","wb+"); // 打开或者创建的二进制文件用于写
-
-//打开文件用完之后记得关闭
-int fclose( FILE *fp );
-
-// 文件读写分为text io和binary io。
-
-fputs("Messing with Strings",pFile);// 往文本文件中写入一段字符
-
-//读取文本文件
-char buff[255];
-fgets(buff, 255, (FILE*)fp);
-printf("读取到的内容: %s\n", buff );
-
-// 读写二进制文件
-size_t fread(void *ptr, size_t size_of_elements, 
-             size_t number_of_elements, FILE *a_file);
-              
-size_t fwrite(const void *ptr, size_t size_of_elements, 
-             size_t number_of_elements, FILE *a_file);
-
-//比如说
-fwrite(randomNumbers,sizeof(int),20,pFile); //该方法接受四个参数，第一个是准备写进去的数据的指针，第二个是每一个元素的大小，第三个是写进去的数量，第四个是文件的指针。
-
-//设定当前读写点位置
-int fseek(FILE *stream, long offset, int whence);
-// 第三个参数可以是SEEK_SET,SEEK_CUR,SEEK_END 。 offset可以是负值
-
-// 文件重命名
-int ret;
-char oldname[] = "file.txt";
-char newname[] = "newfile.txt";
-
-ret = rename(oldname, newname);
-
-if(ret == 0) 
-{
-    printf("文件重命名成功");
-}
-else 
-{
-    printf("错误：不能重命名该文件");
-}
-   
 
 
-```
-但是注意该方法不会创建目录，所以如果当前目录下没有tmp这个文件夹，还是会爆出No Such file or directory的错误的
 
 ### 头文件(header file的作用)
 可以把一些函数的声明写在同名的h文件中，然后在main函数后面完成函数的实现。
@@ -248,7 +141,7 @@ int main(){
 
 
 ### main函数的参数
-```c
+```C
 int main(int argc, char *argv[]){
     int i = 0;
     for( i=0; i<argc;i++){
