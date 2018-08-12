@@ -8,8 +8,8 @@ int main () {
 	char str4[100] = "Hey";
 	int  len ;
 	/* copy str1 into str3 */
-//strcpy(str3, str1);
-//	printf("strcpy( str3, str1) :  %s\n", str3 );
+	//strcpy(str3, str1);
+	//	printf("strcpy( str3, str1) :  %s\n", str3 );
 
 	/* concatenates str1 and str2 */
 	strcat(str3, str2);

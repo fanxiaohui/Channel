@@ -37,12 +37,12 @@ int compare(char * s, char * t)
 
 }
 
-    int main()
-    {
-       char str[100];
-       puts("please input a string");
-	fgets(str,100,stdin);
-	printf("length of that string is  %d\n",length(str));
-	printf("%d\n",compare("apple","apple"));
-      return 0;
-    }
+int main()
+{
+    char str[100];
+    puts("please input a string");
+    fgets(str,100,stdin);
+    printf("length of that string is  %d\n",length(str));
+    printf("%d\n",compare("apple","apple"));
+    return 0;
+}
