@@ -3,4 +3,12 @@
 *.exe
 .vs/
 .vscode/
+/VsProjects/Debug/
+/VsProjects/Debug/Debug/
+/VsProjects/VsProjects/Debug
+*.vcxproj
+*.filters
+*.pdb
+*.obj
+*.idb
 

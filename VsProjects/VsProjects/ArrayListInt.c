@@ -66,14 +66,14 @@ void iterating_elements(st *ss) {
 }
 
 int remove_element_at(st *list, int index) {
-	
-	if (list==NULL||index<0||index>list->index)
+
+	if (list == NULL || index<0 || index>list->index)
 	{
 		fprintf(stderr, "wrong arguments!\n");
 		exit(1);
 	}
 	int result = list->data[index];
-	for (int i = index+1; i < list->index; i++)
+	for (int i = index + 1; i < list->index; i++)
 	{
 		list->data[i - 1] = list->data[i];
 	}
