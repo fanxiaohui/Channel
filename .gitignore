@@ -1,5 +1,6 @@
 /tutorial/*.exe
 /tutorial/tmp/
 *.exe
-.vs
+.vs/
+.vscode/
 

@@ -1,3 +1,0 @@
-objects=a.o b.o c.o d.o
-multi_prog:  multi.c $(objects)
-	clang multi.c $(objects) -o multi_prog
