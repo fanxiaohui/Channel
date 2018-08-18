@@ -1,4 +1,5 @@
 /tutorial/*.exe
 /tutorial/tmp/
 *.exe
+.vs
 
