@@ -14,3 +14,7 @@
 *.ilk
 *.sln
 
+*.tlog
+*.ilk
+*.pdb
+*.obj

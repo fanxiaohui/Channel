@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "ArrayList.h"
 #include "Array_list_generic.h"
+#include "struct_sample.h"
 
 
 void test1() {
@@ -62,7 +63,23 @@ void test3() {
 
 }
 
+//函数原型
+void subtractAndPrint(int x, int y);
+
+//函数实现
+void subtractAndPrint(int x, int y) {
+	int z = x - y;
+	printf("Simon says, the answer is: %d\n", z);
+}
+
+
+void test4() {
+	void(*sapPtr)(int, int) = subtractAndPrint;
+	//(*sapPtr)(10, 2);
+	sapPtr(10, 2);
+}
+
 void main() {
-	test3();
+	create_struct();
 	printf("end of program\n");
 }

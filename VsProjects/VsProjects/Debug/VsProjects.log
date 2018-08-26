@@ -1,2 +1,3 @@
-﻿  main.c
+﻿  struct_imple.c
+c:\users\jimmy\documents\github\channel\vsprojects\vsprojects\struct_imple.c(23): warning C4101: 'p_stuff2': unreferenced local variable
   VsProjects.vcxproj -> C:\Users\Jimmy\Documents\GitHub\Channel\VsProjects\Debug\VsProjects.exe
