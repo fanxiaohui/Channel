@@ -3,6 +3,7 @@
 #include "ArrayList.h"
 #include "Array_list_generic.h"
 #include "struct_sample.h"
+#include "time1.h"
 
 
 void test1() {
@@ -79,7 +80,8 @@ void test4() {
 	sapPtr(10, 2);
 }
 
-void main() {
-	create_struct();
+int main(void) {
+	with_mk_time();
 	printf("end of program\n");
+	return EXIT_SUCCESS;
 }

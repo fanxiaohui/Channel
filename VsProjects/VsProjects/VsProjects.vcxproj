@@ -143,10 +143,13 @@
     <ClCompile Include="ArrayList_Generic.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="struct_imple.c" />
+    <ClCompile Include="time1_impl.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array_list_generic.h" />
+    <ClInclude Include="myHashMap.h" />
     <ClInclude Include="struct_sample.h" />
+    <ClInclude Include="time1.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

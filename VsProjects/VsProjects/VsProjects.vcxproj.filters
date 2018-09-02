@@ -27,12 +27,21 @@
     <ClCompile Include="struct_imple.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="time1_impl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array_list_generic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="struct_sample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="time1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="myHashMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
