@@ -1,0 +1,10 @@
+total 45
+drwxr-xr-x 1 Jimmy 197121     0 Aug  4 15:12 [0m[01;34m.[0m/
+drwxr-xr-x 1 Jimmy 197121     0 Aug  2 22:12 [01;34m..[0m/
+drwxr-xr-x 1 Jimmy 197121     0 Aug  4 09:29 [01;34m.git[0m/
+-rw-r--r-- 1 Jimmy 197121    35 Aug  2 22:01 .gitignore
+drwxr-xr-x 1 Jimmy 197121     0 Aug  2 22:01 [01;34m.vscode[0m/
+-rw-r--r-- 1 Jimmy 197121 11558 Aug  2 22:01 LICENSE
+-rw-r--r-- 1 Jimmy 197121 10841 Aug  2 22:01 README.MD
+drwxr-xr-x 1 Jimmy 197121     0 Aug  4 15:12 [01;34mcrack2[0m/
+drwxr-xr-x 1 Jimmy 197121     0 Aug  2 22:01 [01;34mtutorial[0m/
