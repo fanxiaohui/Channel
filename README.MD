@@ -163,67 +163,6 @@ int main(int argc, char *argv[]){
 // 这些后面都不需要跟冒号，等于定义了一个int常量
 ```
 
-### 时间相关的函数
-1. 跟时间戳相关的函数是clock()
-c/c++中的计时函数是clock，对应的数据类型是一个clock_t
-clock()这个函数返回从“开启这个程序进程”到“程序中调用clock()函数”时之间的CPU时钟计时单元（clock tick）数
-在time.h这个文件中的定义如下
-```c
-#ifndef _CLOCK_T_DEFINED 
-typedef long clock_t; 
-#define _CLOCK_T_DEFINED 
-#endif
-
-#define CLOCKS_PER_SEC ((clock_t)1000) //定义了一秒钟有一千毫秒，这个值就是个1000的常量
-```
-
-2.跟日期和时间相关的数据结构
-这里需要关注两个struct，一个是time_t(包含一个long)，一个是time(包含年月日等详细信息)
-time_t通常由time(NULL)方法获得
-time.h文件中还定义了一个结构体 struct tm {};
-time_t实际上是长整型，也就是毫秒数，而平时使用的年，月，日，小时这些都保存在一个tm的结构体中，这两者之间的转换为:
-
-
-time函数的用法
-```c
-time_t lt; 
-lt =time(NULL); 
-printf("The Calendar Time now is %d\n",lt); 
-// 从1970-01-01 08:00:00到此时的秒数。
-```
-
-获取了time_t就可以转换成tm结构体了
-```c
-struct tm * gmtime(const time_t *timer); 
-struct tm * localtime(const time_t * timer);
-// 然后就可以根据tm结构体中的值获得具体的年月日期了
-struct tm *local; 
-time_t t; 
-t=time(NULL); // 
-local=localtime(&t); 
-printf("Local hour is: %d:%d:%d\n",local->tm_hour,local->tm_min,local->tm_sec); 
-local=gmtime(&t); 
-printf("UTC hour is:  %d:%d:%d\n",local->tm_hour,local->tm_min,local->tm_sec); 
-```
-
-如果想要获得比较简单的format的字符串形式的表示，有两个现成的函数asctime和ctime，都返回一个字符串，分别接受tm 指针和time_t指针。
-```c
-int main(void) 
-{ 
-    struct tm *ptr; 
-    time_t lt; 
-    lt =time(NULL); 
-    ptr=gmtime(&lt); 
-    printf(asctime(ptr)); 
-    printf(ctime(&lt)); 
-    return 0; 
-}
-```
-输出大致是这样的
-Wed May 02 08:57:49 2018 //格林威治时间
-Wed May 02 16:57:49 2018 //当前时区的时间(GMT +8)
-
-linux系统时间如果转换为 time_t 类型，都是从1970-01-01 08:00:00 开始计算
 
 ### 工具函数
 ```c

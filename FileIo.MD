@@ -130,3 +130,43 @@ else
 }
 ```
 但是注意该方法不会创建目录，所以如果当前目录下没有tmp这个文件夹，还是会爆出No Such file or directory的错误的
+
+
+
+创建文件这边
+mkdir并不会自动创建上层目录，所以就有了这样的方法
+```c
+#include<sys/stat.h>
+#include<sys/types.h>
+mkdir("head",0777);
+mkdir("head/follow".0777);
+mkdir("head/follow/end",0777);
+```
+
+或者自己写函数
+```c
+void mkdirs(char *muldir) 
+{
+    int i,len;
+    char str[512];    
+    strncpy(str, muldir, 512);
+    len=strlen(str);
+    for( i=0; i<len; i++ )
+    {
+        if( str[i]=='/' )
+        {
+            str[i] = '\0';
+            if( access(str,0)!=0 ) // access函数判断是否有存取文件的权限
+            {
+                mkdir( str, 0777 );
+            }
+            str[i]='/';
+        }
+    }
+    if( len>0 && access(str,0)!=0 )
+    {
+        mkdir( str, 0777 );
+    }
+    return;
+}
+```
