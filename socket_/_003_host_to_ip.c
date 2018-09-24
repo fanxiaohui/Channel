@@ -22,6 +22,9 @@ int main(int argc, char *argv[])
 	}
 
 	const char *hostip = inet_ntoa(*((struct in_addr*)host->h_addr));
+	printf("hello there2 \n");
+	
+
 	printf("host ip = %s \n", hostip);
 	return EXIT_SUCCESS;
 }
