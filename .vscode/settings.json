@@ -5,6 +5,9 @@
         "string.h": "c",
         "myqueue.h": "c",
         "mylist.h": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "myhashmap.h": "c",
+        "myequal.h": "c",
+        "myhashcode.h": "c"
     }
 }

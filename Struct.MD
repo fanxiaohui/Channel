@@ -1,5 +1,6 @@
 Struct（结构体）
 
+todo 结构体初始化的方式
 
 使用方式
 
@@ -10,5 +11,3 @@ typedef struct a
     char c;
 } A;
 ```
-
-初始化方式
