@@ -8,8 +8,8 @@ queue: queue/Queue.c
 stack: stack/Stack.c
 	cc stack/Stack.c stack/myStack.c list/myList.c -o bin/stack
 
-hashset: hashset/myHashCode.c
-	cc hashset/myHashCode.c hashset/hashSet.c -o bin/hashset
+hashset: hashset/main.c
+	cc hashset/main.c hashset/myHashset.c hashmap/myHashMap.c hashset/myEqual.c hashset/myHashCode.c list/myList.c -o bin/hashset
 
 hashmap: hashmap/main.c
 	cc hashmap/main.c  hashmap/myHashMap.c hashset/myEqual.c hashset/myHashCode.c list/myList.c -o bin/hashmap

@@ -19,6 +19,16 @@ char* strs[S]=
     "lqw"
 };
  
+void testSuccess(int ind)
+{
+    if(ind){
+        puts("delete success");
+    }else
+    {
+        puts("delete failure");
+    }
+}
+
  
 int main()
 {
@@ -27,7 +37,12 @@ int main()
     for (int i=0; i<S; i++)
     {
         data[i]=i;
+       
+        int i = 100;
+      
+        printf("data at %d index is %d\n",i,i);
     }
+
  
     //创建映射需要指定两个函数，hashCode函数和equal函数。
     MyHashMap * map = createMyHashMap(myHashCodeString, myEqualString);
@@ -42,9 +57,9 @@ int main()
     printf("size=%d\n",myHashMapGetSize(map));
  
     //测试删除
-    myHashMapRemoveDataByKey(map,"qq");
-    myHashMapRemoveDataByKey(map,"ab");
-    myHashMapRemoveDataByKey(map,"qwert");
+    testSuccess(myHashMapRemoveDataByKey(map,"qq"));
+    testSuccess(myHashMapRemoveDataByKey(map,"ab"));
+    testSuccess(myHashMapRemoveDataByKey(map,"qwert"));
  
     //输出大小
     printf("after remove size=%d\n",myHashMapGetSize(map));
@@ -56,7 +71,7 @@ int main()
         Entry * pp= myHashMapEntryIteratorNext(it);
         char * key = pp-> key;
         int * value = pp->value;
-        printf("%s(%d)\n", key, *value);
+        printf("key = %s , and value  = (%d)\n", key, *value);
     }
     //释放遍历器
     freeMyHashMapEntryIterator(it);

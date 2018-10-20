@@ -8,6 +8,7 @@
         "system_error": "c",
         "myhashmap.h": "c",
         "myequal.h": "c",
-        "myhashcode.h": "c"
+        "myhashcode.h": "c",
+        "myhashset.h": "c"
     }
 }

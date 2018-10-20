@@ -169,4 +169,13 @@ int main(int argc, char *argv[]){
 rand() %100  //返回0-99的随机整数
 ```
 
-
+```c
+int i = 0;
+if(i)
+{
+    puts("suceess");
+}else{
+    puts(error);
+}
+```
+由于没有boolean类型，0就是false，1是true
