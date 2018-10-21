@@ -1,3 +1,5 @@
+
+[c_stand_library](https://www.tutorialspoint.com/c_standard_library/index.htm)
 编译方式
 > gcc 002.c -o 002
 
@@ -11,31 +13,7 @@
 ### 数组
 数组中的数据类型只能有一种
 
-### 指针
-指针的sizeof和指针指向的数据类型没什么太大关系，事实上，这取决于你的计算机。
-[What is the size of a pointer in C?](https://stackoverflow.com/questions/916051/are-there-any-platforms-where-pointers-to-different-types-have-different-sizes)
-另外，指针的类型一旦确定就不能再更改。
 
-### 函数指针和回调函数
-```c
-int max(int x, int y)
-{
-    return x > y ? x : y;
-}
- 
-int main(){
-int (* p)(int, int) = & max; // &可以省略
-int a, b, c, d;
-printf("请输入三个数字:");
-scanf("%d %d %d", & a, & b, & c);
-// /* 与直接调用函数等价，d = max(max(a, b), c) */
-d = p(p(a, b), c); 
-} 
-```
-可以直接通过指针名调用函数，主要在定义的方式。
-返回值 (* 指针名) (入参，如果没有可以写void) = 之前的某一个函数
-
-回调函数的概念是将函数指针作为某一个函数的参数来使用。
 
 ### 动态分配内存
 malloc和用于运行期动态分配内存，需要stdlib.h文件声明

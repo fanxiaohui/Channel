@@ -5,6 +5,8 @@ c语言中字符串有两种声明形式
 > char greeting[] = "Hello";
 其实编译器会在初始化数组的时候，自动给尾巴加上一个'\0'.注意此时的greeting也是一个指向数组头部的指针
 
+‘\0’是一个“空字符”常量，它表示一个字符串的结束，它的ASCII码值为0。注意它与空格' '（ASCII码值为32）及'0'（ASCII码值为48）不一样的。
+
 ```c
 char a[] = "Sam";
 printf("sizeof sam is %d: \n",sizeof(a)); 
@@ -30,6 +32,7 @@ int main () {
 }
 ```
 这种声明了数组大小的一般都会保证数组大小是字符数+1，为了就是给这个"\0"留一个位置。
+
 
 第二种是使用指针直接指向字符串
 > char *str = "这是一段字符";
@@ -189,11 +192,141 @@ int compare(char * str1 ,char * str2)
 因为"apple"实际上是"apple\0"，走到'\0'之后，这后面的内存是不确定的，可能这后面全部都是未用到的内存，所以一直往后走，直到走完了allocated memory
 
 
+在C中，NULL表示的是指向0的指针
+#define NULL    0
+
+string.h 标准库中定义了空指针，NULL(数值0)
+在C/C++中，当要给一个字符串添加结束标志时，都应该用‘\0’而不是NULL或0
+
+‘\0’是一个“空字符”常量，它表示一个字符串的结束，它的ASCII码值为0。注意它与空格' '（ASCII码值为32）及'0'（ASCII码值为48）不一样的。
+
 来来来，看一些常用的字符串处理功能怎么实现
+[参考](https://blog.csdn.net/Leeds1993/article/details/60956971)
 
-1. 字符串拼接(string concatnate in c)
+```c
+#include<stdio.h>
+#include<string.h>
 
-strstr函数
+//1. 获取字符串的长度，返回的是字符的个数，但是不会包括’\0’,结束符
+size_t strlen(const char *s);
+//  strlen() 函数计算的是字符串的实际长度，遇到第一个'\0'结束；
+//如果你只定义没有给它赋初值，这个结果是不定的，它会从首地址一直找下去，直到遇到'\0'停止；
+//sizeof返回的是变量声明后所占的内存数，不是实际长度，此外sizeof不是函数，仅仅是一个操作符，strlen()是函数；
+
+{
+int strlen(char const*string); 
+char *ptr_string = "helloworld";
+printf("ptr_string len:%d\n",strlen(ptr_string));
+}
+
+
+// 2. 输出字符串到stdout
+puts("something");
+fputs("awesome",stdout);
+
+//3.复制字符串
+char *strcpy(char *dest, const char *src); // 返回参数dest的字符串起始地址
+char *strncpy(char *dest, const char *src, size_t n);
+// 返回参数dest的字符串起始地址, 不像strcpy()，strncpy()不会向dest追加结束标记'\0'；
+//将src指向的字符串拷贝到des指向的字符串数组中去，结束符也一同进行拷贝，size参数也可以拷贝制定长度的字符串，建议des为字符数组 .目标尽量使用字符数组，因为如果是字符指针的话，分配的内存在常量池中，是不允许进行改变的，容易造成段错误
+// 如果des申请的空间不够大，会造成缓冲溢出，看上去像是这样的
+
+int main(int argc,char *argv[]){
+char string[10];
+char *str1 = "abcdefghiabcdefghi";
+strcpy(string, str1); //其实在这里就溢出了
+printf("%s\n", string);  //输出：abcdefghi
+return 0;
+}
+// [1]    32305 abort      ./bin/strings
+
+// 4.字符串拼接函数
+char *strcat(char *dest, const char *src);
+// 返回dest字符串起始地址
+// strcat() 会将参数src字符串复制到参数dest所指的字符串尾部；
+// dest最后的结束字符'\0'会被覆盖掉，并在连接后的字符串的尾部再增加一个'\0'；
+// dest与src所指的内存空间不能重叠，且dest要有足够的空间来容纳要复制的字符串；
+#include <string.h>
+#include <stdio.h>
+
+int main(void)
+{
+char destination[25];
+char *blank = " ", *c = "C++", *Borland = "Borland";
+
+strcpy(destination, Borland);
+strcat(destination, blank);
+strcat(destination, c);
+
+printf("%s\n", destination);  // 输出：Borland C++
+return 0;
+}
+
+char *strncat(char *dest, const char *src, size_t n);
+返回dest字符串起始地址
+strncat()将会从字符串src的开头拷贝n个字符到dest字符串尾部，dest要有足够的空间来容纳要拷贝的字符串；
+       如果n大于字符串src的长度，那么仅将src全部追加到dest的尾部；
+       strncat()会将dest字符串最后的'\0'覆盖掉，字符追加完成后，再追加'\0'；
+
+// 5. 在一个字符串中查找给定字符的第一个匹配之处
+char *strchr(const char *str, int c);
+如果找到指定的字符则返回该字符所在地址，否则返回NULL
+返回的地址是字符串在内存中随机分配的地址再加上你所搜索的字符在字符串的位置；
+字符串str的结束标志‘\0’也会被纳入检索范围，所以str的最后一个字符也可以被定位；
+如果希望查找某字符在字符串中最后一次出现的位置，可以使用 strrchr() 函数；
+
+// 6. strcmp，用于比较两个字符串，
+//根据ASCII码比较，若参数s1和s2字符串相同则返回0，s1若大于s2则返回大于0的值，s1若小于s2则返回小于0的值
+//说  明: 它是区分大小写比较的，如果希望不区分大小写进行字符串比较，可以使用stricmp函数
+int strcmp(const char *s1, const char *s2);
+#include <string.h>
+#include <stdio.h>
+
+int main(void)
+ {
+char *a = "aBcDeF";
+char *b = "AbCdEf";
+char *c = "aacdef";
+char *d = "aBcDeF";
+printf("strcmp(a, b) : %d\n", strcmp(a, b));  // 输出：1
+printf("strcmp(a, c) : %d\n", strcmp(a, c));  // 输出：-1
+printf("strcmp(a, d) : %d\n", strcmp(a, d));  // 输出：0
+return 0;
+ }
+
+ // 7.字符串转数字
+int atoi (const char * str);
+// 返回转换后的整型数；如果str不能转换成int或者str为空字符串，那么将返回0
+// ANSI C规范定义了 stof()、atoi()、atol()、strtod()、strtol()、strtoul() 共6个可以将字符串转换为数字的函数，可以对比学习；
+//另外在C99/C++11规范中又新增了5个函数，分别是 atoll()、strtof()、strtold()、strtoll()、strtoull()；
+#include <stdio.h>
+#include <string.h>
+
+int main ()
+{
+    int i;
+    char buffer[256];
+    printf ("Enter a number: ");
+    fgets (buffer, 256, stdin);
+    i = atoi (buffer);
+    printf ("The value entered is %d.\n", i);
+    return 0;
+}
+
+// 8.在一个字符串里面找另一个字符串
+char *strstr( char *str, char * substr );
+// 返回字符串str中第一次出现子串substr的地址；如果没有检索到子串，则返回NULL
+
+// 9. 计算字符串str中连续有几个字符都属于字符串 accept
+size_t strspn(const char *str, const char * accept);
+//返回字符串str开头连续包含字符串accept内的字符数目。所以，如果str所包含的字符都属于accept，那么返回str的长度；如果str的第一个字符不属于accept，那么返回0
+
+返回字符串str开头连续包含字符串accept内的字符数目。所以，如果str所包含的字符都属于accept，那么返回str的长度；如果str的第一个字符不属于accept，那么返回0
+
+```
+
+[string相关的函数](https://blog.csdn.net/Leeds1993/article/details/60956971)
+[api index](https://www.tutorialspoint.com/c_standard_library/string_h.htm)
 
 
 

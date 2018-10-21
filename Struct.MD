@@ -11,3 +11,4 @@ typedef struct a
     char c;
 } A;
 ```
+接下来使用的时候就用A了而不用struct a了。

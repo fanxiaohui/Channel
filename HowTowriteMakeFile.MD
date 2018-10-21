@@ -127,6 +127,8 @@ clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
 ```
 
+项目结构大概长这样
+```
 .
 |____include
 | |____hellomake.h
@@ -139,7 +141,7 @@ clean:
 | |____obj
 | | |____hellofunc.o
 | | |____hellomake.o
-
+```
 
 Makefile放在src文件夹里面，所有的include文件放在include文件夹里，目录结构大致长上面这样
 make clean会把obj文件夹下的所有.o文件删掉
@@ -147,5 +149,14 @@ PHONY的意思是碰到一个叫做clean的文件不要管
 
 cd 到src文件，去make吧
 
+最后是一个小窍门
+```
+stringcat: stringcat.c
+  clang stringcat.c -o  bin/stringcat
+
+## 下面和上面是一样的，还省事
+stringcat: stringcat.c
+	clang $^ -o  bin/$@
+```
 
 
