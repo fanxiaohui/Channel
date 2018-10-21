@@ -52,3 +52,50 @@ host_to_ip www.baidu.com 即可使用
 ### 写完了之后开始读取
 
 ### 最后应该是释放资源，关闭socket之类的
+
+
+根据域名获取ip的函数有很多
+```c
+// 根据域名获取ip
+int get_ip_by_domain(const char *domain, char *ip)
+{
+	char **pptr;
+	struct hostent *hptr;
+ 
+	hptr = gethostbyname(domain);
+	if(NULL == hptr)
+	{
+		printf("gethostbyname error for host:%s/n", domain);
+		return -1;
+	}
+ 
+	for(pptr = hptr->h_addr_list ; *pptr != NULL; pptr++)
+	{
+		if (NULL != inet_ntop(hptr->h_addrtype, *pptr, ip, IP_SIZE) )
+		{
+			return 0; // 只获取第一个 ip
+		}
+	}
+ 
+	return -1;
+}
+
+void get_ip_addr(char *domain, char *ip_addr)
+{
+    /*通过域名得到相应的ip地址*/
+    struct hostent *host = gethostbyname(domain);
+    if (!host)
+    {
+        ip_addr = NULL;
+        return;
+    }
+
+    for (int i = 0; host->h_addr_list[i]; i++)
+    {
+        strcpy(ip_addr, inet_ntoa( * (struct in_addr*) host->h_addr_list[i]));
+        break;
+    }
+}
+```
+
+[快速学习C语言三: 开发环境, VIM配置, TCP基础，Linux开发基础，Socket开发基础](https://www.cnblogs.com/onlytiancai/p/3855721.html)

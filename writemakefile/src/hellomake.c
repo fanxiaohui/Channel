@@ -17,7 +17,7 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
-#include <hellomake.h>
+#include <../include/hellomake.h>
 
 int main()
 {

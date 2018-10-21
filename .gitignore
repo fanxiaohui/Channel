@@ -3,4 +3,5 @@
 bin/
 *.exe
 .vs
+*.o
 

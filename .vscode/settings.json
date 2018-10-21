@@ -9,6 +9,10 @@
         "myhashmap.h": "c",
         "myequal.h": "c",
         "myhashcode.h": "c",
-        "myhashset.h": "c"
+        "myhashset.h": "c",
+        "functional": "c",
+        "istream": "c",
+        "socket.h": "c",
+        "hellomake.h": "c"
     }
 }

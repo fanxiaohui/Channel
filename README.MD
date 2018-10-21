@@ -179,3 +179,24 @@ if(i)
 }
 ```
 由于没有boolean类型，0就是false，1是true
+
+
+main函数里面是有参数的，
+```c
+int main(int argc,char *argv[ ]){
+        for(int i=0; i<argc;i++)
+        {
+            printf(" ==== the args in postion %d is %s\n",i,argv[i]);
+        }
+    return 0    
+}
+```
+
+./bin/server 8909 1902 misssyou ##参数之间用空格分开
+==== the args in postion 0 is ./bin/server ## (第一个参数是当前文件的文件路径)
+==== the args in postion 1 is 8909 () ## 依次如下，参数是存放在一个数组里面的
+==== the args in postion 2 is 1902
+==== the args in postion 3 is misssyou
+
+[但是实际应用中都有很成熟的argument parser了](https://stackoverflow.com/questions/9642732/parsing-command-line-arguments) 用Getopt就好了
+

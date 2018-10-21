@@ -189,6 +189,14 @@ int compare(char * str1 ,char * str2)
 因为"apple"实际上是"apple\0"，走到'\0'之后，这后面的内存是不确定的，可能这后面全部都是未用到的内存，所以一直往后走，直到走完了allocated memory
 
 
+来来来，看一些常用的字符串处理功能怎么实现
+
+1. 字符串拼接(string concatnate in c)
+
+strstr函数
+
+
+
 
 
 
