@@ -5,8 +5,7 @@
 #include <netdb.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
-
-void printAddressInfo(const struct addrinfo*);
+#include "include/network_util.h"
 
 int main(int argc, char* argv[])
 {
@@ -51,76 +50,4 @@ int main(int argc, char* argv[])
 
     freeaddrinfo(ressave);
     exit(EXIT_SUCCESS);
-}
-
-void printAddressInfo(const struct addrinfo* addr)
-{
-    char str[INET6_ADDRSTRLEN];
-    short port;
-
-    printf("ai_family: ");
-    switch (addr->ai_family)
-    {
-        case AF_INET: {
-            struct sockaddr_in* in;
-
-            printf("ipv4\n");
-            in = (struct sockaddr_in *)(addr->ai_addr);
-            port = ntohs(in->sin_port);
-            inet_ntop(AF_INET, &in->sin_addr, str, sizeof(str));
-            printf("the ip sin_addr is %d",in->sin_addr);
-            printf("str now is %s\n",str);
-            break;
-        }
-        case AF_INET6: {
-            struct sockaddr_in6* in6;
-
-            in6 = (struct sockaddr_in6 *)(addr->ai_addr);
-            port = ntohs(in6->sin6_port);
-            inet_ntop(AF_INET6, &in6->sin6_addr, str, sizeof(str));
-            printf("ipv6\n");
-            break;
-        }
-        default:
-            printf("Unknown\n");
-            break;
-    }
-    printf("ai_socktype: ");
-    switch (addr->ai_socktype)
-    {
-        case SOCK_STREAM:
-            printf("stream\n");
-            break;
-        case SOCK_DGRAM:
-            printf("dgram\n");
-            break;
-        case SOCK_SEQPACKET:
-            printf("seqpacket\n");
-            break;
-        case SOCK_RAW:
-            printf("raw\n");
-            break;
-        default:
-            printf("others\n");
-            break;
-    }
-    printf("protocol: ");
-    switch (addr->ai_protocol)
-    {
-        case IPPROTO_TCP:
-            printf("tcp\n");
-            break;
-        case IPPROTO_UDP:
-            printf("udp\n");
-            break;
-        case IPPROTO_SCTP:
-            printf("sctp\n");
-            break;
-        default:
-            printf("others\n");
-            break;
-    }
-    printf("address: %s\n", str);
-    printf("port: %d\n", port);
-    printf("canonical name: %s\n\n", addr->ai_canonname);
 }

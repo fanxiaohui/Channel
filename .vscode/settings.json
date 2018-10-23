@@ -13,6 +13,8 @@
         "functional": "c",
         "istream": "c",
         "socket.h": "c",
-        "hellomake.h": "c"
+        "hellomake.h": "c",
+        "host_to_ip.h": "c",
+        "types.h": "c"
     }
 }

@@ -8,8 +8,8 @@ int main(void)
 
    strcpy(destination, Borland);
    strcat(destination, blank);
-   strcat(destination, c);
+   char *res =  strcat(destination, c);
 
-   printf("%s\n", destination);  // 输出：Borland C++
+   printf("%s\n", res);  // 输出：Borland C++
    return 0;
 }

@@ -1,16 +1,32 @@
-server: simple_server.c
-	gcc simple_server.c  -o bin/server
+IDIR =../include
+CC=gcc
+CFLAGS=-I$(IDIR)
 
-client: simple_httpclient.c
-	gcc simple_httpclient.c -o bin/client	
+ODIR=obj
+LDIR =../lib
 
-udpserver: udp_server.c
-	gcc udp_server.c -o bin/udp_server
+LIBS=-lm ## 这个是math library
+
+# _DEPS = host_to_ip.h
+# DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
+# # _OBJ = host_to_ip.o hellofunc.o 
+# # OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+
+# $(ODIR)/%.o: %.c $(DEPS)
+# 	$(CC) -c -o $@ $< $(CFLAGS)
 
 
-udpclient: udp_client.c
-	gcc udp_client.c -o bin/udp_client
+# hellomake: $(OBJ)
+# 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
+app: app.c network_util.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
+get_host_by_name: get_host_by_name.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
+.PHONY: clean
 
 clean:
-	rm -rf bin/*
+	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ bin/*

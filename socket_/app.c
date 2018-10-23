@@ -1,20 +1,3 @@
-/*
- * =====================================================================================
- *
- *       Filename:  app.c
- *
- *    Description:  
- *
- *        Version:  1.0
- *        Created:  08/26/2018 04:47:50 AM
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  YOUR NAME (), 
- *   Organization:  
- *
- * =====================================================================================
- */
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,10 +11,10 @@
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include "include/network_util.h"
 
 #define MAC_SIZE	18
 #define IP_SIZE		16
-
 
 
 // function declare
@@ -40,19 +23,22 @@ int get_local_mac(const char *eth_inf, char *mac); // 获取本机mac
 int get_local_ip(const char *eth_inf, char *ip); // 获取本机ip
 
 
-int main() {
+int main(int argc, char* argv[]) {
 
 
 	char ip[IP_SIZE];
 	char mac[MAC_SIZE];
+
 	const char *test_domain = "www.baidu.com";
 	const char *test_eth = "eth0";
 
+	char* re = host_to_ip(test_domain);
+	printf("the resulting ip address is %s\n",re);
 	get_ip_by_domain(test_domain, ip);
 	printf("%s ip: %s\n", test_domain, ip);
 
-	get_local_mac(test_eth, mac);
-	printf("local %s mac: %s\n", test_eth, mac);
+	// get_local_mac(test_eth, mac);
+	// printf("local %s mac: %s\n", test_eth, mac);
 
 	get_local_ip(test_eth, ip);
 	printf("local %s ip: %s\n", test_eth, ip);
@@ -88,40 +74,40 @@ int get_ip_by_domain(const char *domain, char *ip)
 	return -1;
 }
  
-// 获取本机mac
-int get_local_mac(const char *eth_inf, char *mac)
-{
-	struct ifreq ifr;
-	int sd;
+// // 获取本机mac,linux上可用
+// int get_local_mac(const char *eth_inf, char *mac)
+// {
+// 	struct ifreq ifr;
+// 	int sd;
 	
-	bzero(&ifr, sizeof(struct ifreq));
-	if( (sd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	{
-		printf("get %s mac address socket creat error\n", eth_inf);
-		return -1;
-	}
+// 	bzero(&ifr, sizeof(struct ifreq));
+// 	if( (sd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+// 	{
+// 		printf("get %s mac address socket creat error\n", eth_inf);
+// 		return -1;
+// 	}
 	
-	strncpy(ifr.ifr_name, eth_inf, sizeof(ifr.ifr_name) - 1);
+// 	strncpy(ifr.ifr_name, eth_inf, sizeof(ifr.ifr_name) - 1);
  
-	if(ioctl(sd, SIOCGIFHWADDR, &ifr) < 0)
-	{
-		printf("get %s mac address error\n", eth_inf);
-		close(sd);
-		return -1;
-	}
+// 	if(ioctl(sd, SIOCGIFHWADDR, &ifr) < 0)
+// 	{
+// 		printf("get %s mac address error\n", eth_inf);
+// 		close(sd);
+// 		return -1;
+// 	}
  
-	snprintf(mac, MAC_SIZE, "%02x:%02x:%02x:%02x:%02x:%02x",
-		(unsigned char)ifr.ifr_hwaddr.sa_data[0], 
-		(unsigned char)ifr.ifr_hwaddr.sa_data[1],
-		(unsigned char)ifr.ifr_hwaddr.sa_data[2], 
-		(unsigned char)ifr.ifr_hwaddr.sa_data[3],
-		(unsigned char)ifr.ifr_hwaddr.sa_data[4],
-		(unsigned char)ifr.ifr_hwaddr.sa_data[5]);
+// 	snprintf(mac, MAC_SIZE, "%02x:%02x:%02x:%02x:%02x:%02x",
+// 		(unsigned char)ifr.ifr_hwaddr.sa_data[0], 
+// 		(unsigned char)ifr.ifr_hwaddr.sa_data[1],
+// 		(unsigned char)ifr.ifr_hwaddr.sa_data[2], 
+// 		(unsigned char)ifr.ifr_hwaddr.sa_data[3],
+// 		(unsigned char)ifr.ifr_hwaddr.sa_data[4],
+// 		(unsigned char)ifr.ifr_hwaddr.sa_data[5]);
  
-	close(sd);
+// 	close(sd);
 	
-	return 0;
-}
+// 	return 0;
+// }
  
  
 // 获取本机ip
@@ -130,7 +116,6 @@ int get_local_ip(const char *eth_inf, char *ip)
 	int sd;
 	struct sockaddr_in sin;
 	struct ifreq ifr;
- 
 	sd = socket(AF_INET, SOCK_DGRAM, 0);
 	if (-1 == sd)
 	{

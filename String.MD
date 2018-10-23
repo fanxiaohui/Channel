@@ -7,6 +7,9 @@ c语言中字符串有两种声明形式
 
 ‘\0’是一个“空字符”常量，它表示一个字符串的结束，它的ASCII码值为0。注意它与空格' '（ASCII码值为32）及'0'（ASCII码值为48）不一样的。
 
+printf("%s\n", 0);  // 输出：(null) 
+
+
 ```c
 char a[] = "Sam";
 printf("sizeof sam is %d: \n",sizeof(a)); 
@@ -203,79 +206,93 @@ string.h 标准库中定义了空指针，NULL(数值0)
 来来来，看一些常用的字符串处理功能怎么实现
 [参考](https://blog.csdn.net/Leeds1993/article/details/60956971)
 
+
+1. 获取字符串的长度，返回的是字符的个数，但是不会包括’\0’,结束符
+size_t strlen(const char *s);
+ strlen() 函数计算的是字符串的实际长度，遇到第一个'\0'结束；
+如果你只定义没有给它赋初值，这个结果是不定的，它会从首地址一直找下去，直到遇到'\0'停止；
+sizeof返回的是变量声明后所占的内存数，不是实际长度，此外sizeof不是函数，仅仅是一个操作符，strlen()是函数；
 ```c
 #include<stdio.h>
 #include<string.h>
-
-//1. 获取字符串的长度，返回的是字符的个数，但是不会包括’\0’,结束符
-size_t strlen(const char *s);
-//  strlen() 函数计算的是字符串的实际长度，遇到第一个'\0'结束；
-//如果你只定义没有给它赋初值，这个结果是不定的，它会从首地址一直找下去，直到遇到'\0'停止；
-//sizeof返回的是变量声明后所占的内存数，不是实际长度，此外sizeof不是函数，仅仅是一个操作符，strlen()是函数；
-
 {
-int strlen(char const*string); 
-char *ptr_string = "helloworld";
-printf("ptr_string len:%d\n",strlen(ptr_string));
+    int strlen(char const*string); 
+    char *ptr_string = "helloworld";
+    printf("ptr_string len:%d\n",strlen(ptr_string));
 }
+```
 
+2. 输出字符串到stdout，其实就是其他语言里的print
 
-// 2. 输出字符串到stdout
+```c
 puts("something");
 fputs("awesome",stdout);
+```
 
-//3.复制字符串
+
+3.复制字符串strcpy和strncpy
+```c
 char *strcpy(char *dest, const char *src); // 返回参数dest的字符串起始地址
 char *strncpy(char *dest, const char *src, size_t n);
 // 返回参数dest的字符串起始地址, 不像strcpy()，strncpy()不会向dest追加结束标记'\0'；
 //将src指向的字符串拷贝到des指向的字符串数组中去，结束符也一同进行拷贝，size参数也可以拷贝制定长度的字符串，建议des为字符数组 .目标尽量使用字符数组，因为如果是字符指针的话，分配的内存在常量池中，是不允许进行改变的，容易造成段错误
-// 如果des申请的空间不够大，会造成缓冲溢出，看上去像是这样的
-
 int main(int argc,char *argv[]){
-char string[10];
-char *str1 = "abcdefghiabcdefghi";
-strcpy(string, str1); //其实在这里就溢出了
-printf("%s\n", string);  //输出：abcdefghi
-return 0;
+    char string[10];
+    char *str1 = "abcdefghiabcdefghi";
+    strcpy(string, str1); //其实在这里就溢出了
+    printf("%s\n", string);  //输出：abcdefghi
+    return 0;
 }
+// 如果des申请的空间不够大，会造成缓冲溢出，看上去像是这样的
 // [1]    32305 abort      ./bin/strings
+```
+不像strcpy()，strncpy()不会向dest追加结束标记'\0'；
 
+4. 字符串拼接函数strcat和strncat
+```c
 // 4.字符串拼接函数
 char *strcat(char *dest, const char *src);
 // 返回dest字符串起始地址
 // strcat() 会将参数src字符串复制到参数dest所指的字符串尾部；
 // dest最后的结束字符'\0'会被覆盖掉，并在连接后的字符串的尾部再增加一个'\0'；
 // dest与src所指的内存空间不能重叠，且dest要有足够的空间来容纳要复制的字符串；
+
+// char *strncat(char *dest, const char *src, size_t n);
+// 返回dest字符串起始地址
+// strncat()将会从字符串src的开头拷贝n个字符到dest字符串尾部，dest要有足够的空间来容纳要拷贝的字符串；
+//        如果n大于字符串src的长度，那么仅将src全部追加到dest的尾部；
+//        strncat()会将dest字符串最后的'\0'覆盖掉，字符追加完成后，再追加'\0'；
 #include <string.h>
 #include <stdio.h>
 
 int main(void)
 {
-char destination[25];
-char *blank = " ", *c = "C++", *Borland = "Borland";
+    char destination[25];
+    char *blank = " ", *c = "C++", *Borland = "Borland";
 
-strcpy(destination, Borland);
-strcat(destination, blank);
-strcat(destination, c);
+    strcpy(destination, Borland);
+    strcat(destination, blank);
+    strcat(destination, c);
 
-printf("%s\n", destination);  // 输出：Borland C++
-return 0;
+    printf("%s\n", destination);  // 输出：Borland C++
+    return 0;
 }
+```
 
-char *strncat(char *dest, const char *src, size_t n);
-返回dest字符串起始地址
-strncat()将会从字符串src的开头拷贝n个字符到dest字符串尾部，dest要有足够的空间来容纳要拷贝的字符串；
-       如果n大于字符串src的长度，那么仅将src全部追加到dest的尾部；
-       strncat()会将dest字符串最后的'\0'覆盖掉，字符追加完成后，再追加'\0'；
-
-// 5. 在一个字符串中查找给定字符的第一个匹配之处
+ 5. 在一个字符串中查找给定字符的第一个匹配之处(可以理解为indexof)
+```c
 char *strchr(const char *str, int c);
-如果找到指定的字符则返回该字符所在地址，否则返回NULL
-返回的地址是字符串在内存中随机分配的地址再加上你所搜索的字符在字符串的位置；
-字符串str的结束标志‘\0’也会被纳入检索范围，所以str的最后一个字符也可以被定位；
-如果希望查找某字符在字符串中最后一次出现的位置，可以使用 strrchr() 函数；
+// 如果找到指定的字符则返回该字符所在地址，否则返回NULL
+// 返回的地址是字符串在内存中随机分配的地址再加上你所搜索的字符在字符串的位置；
+// 字符串str的结束标志‘\0’也会被纳入检索范围，所以str的最后一个字符也可以被定位；
+// 如果希望查找某字符在字符串中最后一次出现的位置，可以使用 strrchr() 函数；
 
-// 6. strcmp，用于比较两个字符串，
+
+```
+
+
+6. strcmp，用于比较两个字符串，
+```c
 //根据ASCII码比较，若参数s1和s2字符串相同则返回0，s1若大于s2则返回大于0的值，s1若小于s2则返回小于0的值
 //说  明: 它是区分大小写比较的，如果希望不区分大小写进行字符串比较，可以使用stricmp函数
 int strcmp(const char *s1, const char *s2);

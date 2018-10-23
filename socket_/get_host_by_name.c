@@ -11,7 +11,10 @@ int main(int argc, char* argv[])
     char *ptr, **pptr;
     char str[INET_ADDRSTRLEN];
     struct hostent * hptr;
-
+    if(argc<2){
+        puts("host name required!");
+        exit(EXIT_FAILURE);
+    }
     while (--argc > 0)
     {
         ptr = *++argv;

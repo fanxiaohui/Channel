@@ -6,12 +6,15 @@ OBJ = strings.o
 # %.o: %.c $(DEPS)
 # 	$(CC) -c -o $@ $< $(CFLAGS)
 stringcpy: stringcpy.c
-	cc stringcpy.c -o bin/stringcpy
+	${CC} stringcpy.c -o bin/stringcpy
+
+stringncpy: stringncpy.c
+	${CC} $^ -o  bin/$@	
 
 stringcat: stringcat.c
 	clang $^ -o  bin/$@
 
-stringcatn: stringcatn.c
+stringncat: stringncat.c
 	clang $^ -o  bin/$@
 
 stringchr: stringchr.c
