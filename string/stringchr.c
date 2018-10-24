@@ -11,7 +11,7 @@ int main()
     printf("%s\n", p);  // 输出：134513945
     p = strrchr(s, '5');
     printf("%s\n", p);  // 输出：134513965
-     p = strrchr(s, 'a');
+    p = strrchr(s, 'a');
     a = strrchr(s,'0');
 
     printf("head is %ld and end is  %ld and length is %ld \n",s,a,strlen(s));

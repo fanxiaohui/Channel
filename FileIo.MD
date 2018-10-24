@@ -170,3 +170,14 @@ void mkdirs(char *muldir)
     return;
 }
 ```
+
+
+[c语言中check file exists的方式](https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c-cross-platform)
+```c
+#include <unistd.h>
+if( access( fname, F_OK ) != -1 ) {
+    // file exists
+} else {
+    // file doesn't exist
+}
+```

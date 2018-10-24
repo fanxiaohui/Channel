@@ -203,6 +203,42 @@ string.h 标准库中定义了空指针，NULL(数值0)
 
 ‘\0’是一个“空字符”常量，它表示一个字符串的结束，它的ASCII码值为0。注意它与空格' '（ASCII码值为32）及'0'（ASCII码值为48）不一样的。
 
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+main(int argc, char const *argv[])
+{
+    char str[5] = "abcdefg";
+    printf("content of str is %s\n",str);
+    printf("strlen(str)=%d ,sizeof(str)=%d\n",strlen(str),sizeof(str));
+    return 0;
+}
+```
+显然字符串的长度超出了声明的数组的长度，同一个程序，运行结果每一次都不一样
+> ➜  string git:(master) ✗ ./bin/stringlen
+content of str is abcdeh�)Y�
+strlen(str)=11 ,sizeof(str)=5
+➜  string git:(master) ✗ ./bin/stringlen
+content of str is abcdeTW�
+strlen(str)=11 ,sizeof(str)=5
+➜  string git:(master) ✗ ./bin/stringlen
+content of str is abcdeh��Z�
+strlen(str)=11 ,sizeof(str)=5
+➜  string git:(master) ✗ ./bin/stringlen
+content of str is abcdehXxS�
+strlen(str)=11 ,sizeof(str)=5
+➜  string git:(master) ✗ ./bin/stringlen
+content of str is abcdehX�P�
+strlen(str)=11 ,sizeof(str)=5
+➜  string git:(master) ✗ ./bin/stringlen
+content of str is abcdeh(PR�
+strlen(str)=11 ,sizeof(str)=5
+➜  string git:(master) ✗
+
+// 前五个是准确的，但是因为找不到'\0'，所以一直往后print。会走到一些未初始化的内存上，顺便打印出了这些位置上的上一次的值。
+
 来来来，看一些常用的字符串处理功能怎么实现
 [参考](https://blog.csdn.net/Leeds1993/article/details/60956971)
 

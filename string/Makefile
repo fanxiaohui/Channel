@@ -12,28 +12,38 @@ stringncpy: stringncpy.c
 	${CC} $^ -o  bin/$@	
 
 stringcat: stringcat.c
-	clang $^ -o  bin/$@
+	${CC} $^ -o  bin/$@
 
 stringncat: stringncat.c
-	clang $^ -o  bin/$@
+	${CC} $^ -o  bin/$@
 
 stringchr: stringchr.c
-	clang $^ -o  bin/$@
+	${CC} $^ -o  bin/$@
 
 stringcmp: stringcmp.c
-	clang $^ -o  bin/$@
+	${CC} $^ -o  bin/$@
 
 stringatio: stringatio.c
-	clang $^ -o  bin/$@
+	${CC} $^ -o  bin/$@
 
 stringstr: stringstr.c
-	clang $^ -o  bin/$@
+	${CC} $^ -o  bin/$@
 
 stringsprn: stringsprn.c
-	clang $^ -o  bin/$@	
+	${CC} $^ -o  bin/$@	
 
+stringlen: stringlen.c
+	${CC} $^ -o  bin/$@	
 
+stringspn: stringspn.c
+	${CC} $^ -o  bin/$@	
 
+stringcspn: stringcspn.c
+	${CC} $^ -o  bin/$@	
+
+stringerror: stringerror.c
+	${CC} $^ -o  bin/$@	
+		
 # strings: $(OBJ)
 # 	$(CC) -c -o $@ $^ $(CFLAGS)
 
