@@ -10,8 +10,8 @@
 
 #include <signal.h>
 
-#define PORT 8887
-#define SERV "127.0.0.1"
+#define PORT 18887
+#define SERV "0.0.0.0"
 #define QUEUE 20
 #define BUFF_SIZE 1024
 
@@ -30,6 +30,7 @@ HTTP_CONTENT_TYPE http_content_type[] = {
 int sockfd;
 char *http_res_tmpl = "HTTP/1.1 200 OK\r\n"
         "Server: Cleey's Server V1.0\r\n"
+        "你好啊\r\n"
     "Accept-Ranges: bytes\r\n"
         "Content-Length: %d\r\n"
         "Connection: close\r\n"
@@ -79,7 +80,7 @@ int main(int argc,char *argv[ ]){
                 int len = recv(sock_client,buff,sizeof(buff),0);
                 fputs(buff,stdout);
                 //send(sock_client,buff,len,0);
-                char *re = joinString("<h2>the client said</h2> <br>  ",buff);
+                char *re = joinString("<h2>the client said</h2><h3>哈哈</h3><br>  ",buff);
                 http_send(sock_client,re);
                 close(sock_client);
         }

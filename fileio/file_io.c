@@ -1,42 +1,56 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "fileutil.h"
 
 
-void write_string_to_file(FILE *fp,char * contents);
 
-main(int argc, char const *argv[])
+int main(int argc, char const *argv[])
 {
+    if(argc<2){
+        printf("you need supply what goes into the file \n");
+        exit(1);
+    }
+    char *filename = "hashes2.txt";
+    char * contents = argv[1];
 
-    char *str = malloc(256);
+    int res ;
+    if(file_exits(filename)){
+        printf("file %s exists \n",filename);
+    }else {
+        res = file_write_string_to_file(filename,contents);
+    }
 
-    puts("say something");
-    gets(str);
-    printf("that length is %d\n",strlen(str));
+    if(res) {
+        printf("successfully write contents to file\n");
+    }else {
+        printf("error writing contents to file \n");
+    }
+    contents = strcat(contents,"\n");
+    res = append_contents_to_a_file(filename,contents);
+    if(res) {
+        printf("successfully append contents to file\n");
+    }else {
+        printf("error append contents to file \n");
+    }
 
-    FILE *fp;
-    fp = fopen("sample1.txt","w");
+    char *filecontent = file_read_content_from_file(filename);
+    printf("contents in that file : \n %s\n",filecontent);
+    free(filecontent);
+    printf("now we are free\n");
 
 
-    write_string_to_file(fp,str);
-
-
-
+    FILE *myFile = fopen(filename,"r");
+    while (!feof(myFile)) {
+        const char *line = readLine(myFile);
+        printf("line %s\n", line);
+    }
+    fclose(myFile);
     return 0;
 }
 
-void write_string_to_file(FILE *fp,char * contents){
-    if(fp==NULL)
-    {
-        printf("error while writing some file\n");
-        exit(1);
-    }
-    fprintf(fp,contents);
-    fprintf(fp,"\n");
-    fprintf(fp,"some junk file content and some others\0\n");
-    fputs("this is time travel \n",fp);
-    fprintf(fp,"some junk file content and some others\n");
-    fclose(fp);
-}
+
+
+
 
 

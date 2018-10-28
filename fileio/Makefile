@@ -13,7 +13,7 @@ union: union_sample.c
 typedef: typedef_sample.c
 	$(CC) $^ -o  bin/$@	
 
-file_io: file_io.c
+file_io: file_io.c fileutil.c
 	$(CC) $^ -o  bin/$@
 
 jsonsample: json_sample.c

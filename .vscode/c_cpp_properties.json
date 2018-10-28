@@ -6,7 +6,8 @@
                 "/usr/include",
                 "/usr/local/include",
                 "${workspaceFolder}",
-                "${workspaceFolder}/socket_/include"
+                "${workspaceFolder}/socket_/include",
+                "${workspaceFolder}/fileio"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",

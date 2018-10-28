@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 {
     if (argc < 2)
     {
-        printf("please input host name %s ipn", argv[0]);
+        printf("please input host name %s ip\nfor exmaple: \nwww.google.com\n", argv[0]);
         return 1;
     }
     char *host = argv[1];
@@ -39,11 +39,24 @@ int main(int argc, char *argv[])
     char *server_ip[100];
     puts("2: Get ip address...");
     get_ip_addr(host, server_ip);
+    char * host_without_www ;
+    if((host_without_www=strstr(host,"www."))!=NULL){
+        host = host_without_www+4;
+        printf("\n\n3. remove www. from url,the host is %s\n\n",host);
+    }
+    char * host_with_out_sub_path;
+    if((host_with_out_sub_path=strstr(host,"/"))!=NULL){
+       // remove sub path
+       host = strtok(host, "/");
+       printf("removeing subpath.... host is %s\n",host);
+    }
+
     if (strlen(server_ip) == 0)
     {
         printf("can not get ip address\n");
         return 0;
     }
+    printf("4. starting wrting into socket \n");
     strcat(httpstring, "GET / HTTP/1.1\r\n");
     strcat(httpstring, "Host: ");
     strcat(httpstring, host);
@@ -60,7 +73,7 @@ int main(int argc, char *argv[])
     char ch;
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     address.sin_family = AF_INET;
-    printf("the server host is %s \nand the ip is %s\n", argv[1], server_ip);
+    printf("the server host is %s \nand the ip is %s\n\n", argv[1], server_ip);
     address.sin_addr.s_addr = inet_addr(server_ip);
     address.sin_port = htons(80);
     len = sizeof(address);
@@ -73,17 +86,20 @@ int main(int argc, char *argv[])
     // printf("befor connect!!");
     write(sockfd, httpstring, strlen(httpstring));
     // printf("after write!!\n");
-    puts("3: write to socket over...");
+    puts("5: write to socket over...");
     int mem_size = 4096;
     int length = 0;
     int length_read;
     char *buf = (char *)malloc(mem_size * sizeof(char));
     char *response = (char *)malloc(mem_size * sizeof(char));
-
+    long start_read_body = 0;
+    long length_of_body_read = 0;
+    long content_length;
     //每次单个字符读取响应头信息, 仅仅读取的是响应部分的头部, 后面单独开线程下载
     while ((length_read = read(sockfd, buf, 1)) != 0)
     {
         // printf("=====reading===== %d bytes read ",length_read);
+        // 测下来read是一个byte一个byte读取的
         if (length + length_read > mem_size)
         {
             //动态内存申请, 因为无法确定响应头内容长度
@@ -99,24 +115,60 @@ int main(int argc, char *argv[])
 
         buf[length_read] = '\0';
         strcat(response, buf);
+        if(start_read_body){
+            // printf("adding more data \n");
+            length_of_body_read+=length_read;
+        }
+        if(content_length>0){
+            if(length_of_body_read>=content_length){
+                printf("read body end%s\n");
+                printf("\n<<<<<<response is >>>>>>>>\n %s",response);
+                printf("<<<<<>>>>\n\n");
+                break;
+            } else if(length_of_body_read%10000==0){
+                // printf("read body meet 10000%s\n");
+                // printf("\n<<<<<<response is >>>>>>>>\n %s",response);
+                // printf("<<<<<>>>>\n\n");
+                printf("length_of_body_read = %ld\n",length_of_body_read);
+                printf("content_length= %ld\n",content_length);
+            }
+           
+        }
 
         //找到响应头的头部信息, 两个"\n\r"为分割点
         int flag = 0;
         for (int i = strlen(response) - 1; response[i] == '\n' || response[i] == '\r'; i--, flag++)
             ;
-        if (flag == 4)
-            break;
-        length += len;
-        // printf("totoal read count %d\n",strlen(response));
+        if (flag == 4&&start_read_body==0)
+        {
+            printf("totoal read count %d\n",strlen(response));
+            start_read_body = 1;
+            printf("\n>>>>Response header:<<<<\n%s", response);
+            printf("\n>>>>Response header:<<<<\n");
+            struct resp_header resp = get_resp_header(response);
+
+            printf("content_length is %ld\n", resp.content_length);
+            printf("status_code is %d\n", resp.status_code);
+            printf("content_length is %ld\n", resp.content_length);
+
+            content_length = resp.content_length;
+            // break;
+        }
+        // if(length%100==0){
+        //     printf("\n>>>>Response header:<<<<\n%s and strl(response) is %ld\n\n", response,strlen(response));
+        // }
+
+            
+        length += length_read;
     }
 
-    printf("\n>>>>Response :<<<<\n%s", response);
+    // printf("\n>>>>Response header:<<<<\n%s", response);
+    // struct resp_header resp = get_resp_header(response);
+    // printf("\n>>>>Response header:<<<<\n");
 
-    struct resp_header resp = get_resp_header(response);
+   
+    // printf("\n>>>>Response header:<<<<\n");
 
-    printf("content_length is %ld\n", resp.content_length);
-    printf("status_code is %d\n", resp.status_code);
-    printf("content_length is %ld\n", resp.content_length);
 
     // strcpy(resp.file_name, file_name);
     free(buf);
@@ -160,6 +212,13 @@ void get_ip_addr(char *domain, char *ip_addr)
     {
         ip_addr = NULL;
         return;
+    }
+    char *temp_ip[100];
+    for (int i = 0; host->h_addr_list[i]; i++)
+    {
+        memset(temp_ip,0,100);
+        strcpy(temp_ip, inet_ntoa(*(struct in_addr *)host->h_addr_list[i]));
+        printf("query ip result at index %d with result %s \n ",i,temp_ip);
     }
 
     for (int i = 0; host->h_addr_list[i]; i++)

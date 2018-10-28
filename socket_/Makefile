@@ -26,6 +26,15 @@ app: app.c network_util.c
 get_host_by_name: get_host_by_name.c
 	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
 
+simple_httpclient: simple_httpclient.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
+simple_httpserver: simple_httpserver.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
+stringhexvalue: stringhexvalue.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
 .PHONY: clean
 
 clean:

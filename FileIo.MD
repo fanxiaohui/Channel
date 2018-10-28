@@ -68,34 +68,6 @@ return 0;
     }
 ```
 
-c语言没有现现成的readline方法，但是也[没有必要去重新发明readline方法](https://stackoverflow.com/questions/3501338/c-read-file-line-by-line)
-```c
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(void)
-{
-    FILE * fp;
-    char * line = NULL;
-    size_t len = 0;
-    ssize_t read;
-
-    fp = fopen("/etc/motd", "r");
-    if (fp == NULL)
-        exit(EXIT_FAILURE);
-
-    while ((read = getline(&line, &len, fp)) != -1) {
-        printf("Retrieved line of length %zu :\n", read);
-        printf("%s", line);
-    }
-
-    fclose(fp);
-    if (line)
-        free(line);
-    exit(EXIT_SUCCESS);
-}
-```
 
 
 
@@ -179,5 +151,120 @@ if( access( fname, F_OK ) != -1 ) {
     // file exists
 } else {
     // file doesn't exist
+}
+```
+
+读取文件内容的方法,这里分两种
+一. 事先知道文件多大
+```c
+#include <stdio.h>
+#define MAXBUFLEN 1000000
+
+char source[MAXBUFLEN + 1];
+FILE *fp = fopen("foo.txt", "r");
+if (fp != NULL) {
+    size_t newLen = fread(source, sizeof(char), MAXBUFLEN, fp);
+    if (newLen == 0) {
+        fputs("Error reading file", stderr);
+    } else {
+        source[newLen] = '\0'; /* Just to be safe. */
+    }
+
+    fclose(fp);
+}
+```
+
+二. 我不知道文件多大
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+char *source = NULL;
+FILE *fp = fopen("foo.txt", "r");
+if (fp != NULL) {
+    /* Go to the end of the file. */
+    if (fseek(fp, 0L, SEEK_END) == 0) {
+        /* Get the size of the file. */
+        long bufsize = ftell(fp);
+        if (bufsize == -1) { /* Error */ }
+
+        /* Allocate our buffer to that size. */
+        source = malloc(sizeof(char) * (bufsize + 1));
+
+        /* Go back to the start of the file. */
+        if (fseek(fp, 0L, SEEK_SET) != 0) { /* Handle error here */ }
+
+        /* Read the entire file into memory. */
+        size_t newLen = fread(source, sizeof(char), bufsize, fp);
+        if (newLen == 0) {
+            fputs("Error reading file", stderr);
+        } else {
+            source[newLen] = '\0'; /* Just to be safe. */
+        }
+    }
+    fclose(fp);
+}
+
+free(source); /* Don't forget to call free() later! */
+```
+
+
+c语言没有现现成的readline方法，但是也[没有必要去重新发明readline方法](https://stackoverflow.com/questions/3501338/c-read-file-line-by-line)
+```c
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    fp = fopen("/etc/motd", "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+
+    while ((read = getline(&line, &len, fp)) != -1) {
+        printf("Retrieved line of length %zu :\n", read);
+        printf("%s", line);
+    }
+
+    fclose(fp);
+    if (line)
+        free(line);
+    exit(EXIT_SUCCESS);
+}
+```
+但是上面这段也还是只能在linux上运行，多平台兼容是在是头疼
+
+//写文件
+fprintf(f, "Some text: %s\n", text);  // fprintf这个函数接受三个参数，中间一个要根据是文字还是整数还是浮点数做出调整
+```c
+int file_write_number_to_file(char* file_name)
+{
+    FILE *f = fopen(file_name, "w");
+    if (f == NULL)
+    {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+
+    /* print some text */
+    const char *text = "Write this to the file";
+    fprintf(f, "Some text: %s\n", text); 
+
+    /* print integers and floats */
+    int i = 1;
+    float py = 3.1415927;
+    fprintf(f, "Integer: %d, float: %f\n", i, py);
+
+    /* printing single chatacters */
+    char c = 'A';
+    fprintf(f, "A character: %c\n", c);
+
+    fclose(f);
+    return 0;
 }
 ```
