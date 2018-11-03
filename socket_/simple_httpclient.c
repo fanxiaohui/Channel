@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     int result;
     char httpstring[1000];
 
-    char *server_ip[100];
+    char server_ip[100];
     puts("2: Get ip address...");
     get_ip_addr(host, server_ip);
     char * host_without_www ;
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
         }
         if(content_length>0){
             if(length_of_body_read>=content_length){
-                printf("read body end%s\n");
+                printf("read body end\n");
                 printf("\n<<<<<<response is >>>>>>>>\n %s",response);
                 printf("<<<<<>>>>\n\n");
                 break;
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
             ;
         if (flag == 4&&start_read_body==0)
         {
-            printf("totoal read count %d\n",strlen(response));
+            printf("totoal read count %lu\n",strlen(response));
             start_read_body = 1;
             printf("\n>>>>Response header:<<<<\n%s", response);
             printf("\n>>>>Response header:<<<<\n");
@@ -213,7 +213,7 @@ void get_ip_addr(char *domain, char *ip_addr)
         ip_addr = NULL;
         return;
     }
-    char *temp_ip[100];
+    char temp_ip[100];
     for (int i = 0; host->h_addr_list[i]; i++)
     {
         memset(temp_ip,0,100);

@@ -35,6 +35,9 @@ simple_httpserver: simple_httpserver.c
 stringhexvalue: stringhexvalue.c
 	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
 
+socket_server: socket_server.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
 .PHONY: clean
 
 clean:

@@ -11,31 +11,14 @@
 
 #include <signal.h>
 
-#define PORT 18887
+#define PORT 7037
 #define SERV "0.0.0.0"
 #define QUEUE 20
 #define BUFF_SIZE 1024
 
 
-typedef struct doc_type{
-        char *key;
-        char *value;
-}HTTP_CONTENT_TYPE;
-
-HTTP_CONTENT_TYPE http_content_type[] = {
-        { "html","text/html" },
-        { "gif" ,"image/gif" },
-        { "jpeg","image/jpeg" }
-};
-
 int sockfd;
-char *http_res_tmpl = "HTTP/1.1 200 OK\r\n"
-        "Server: Cleey's Server V1.0\r\n"
-        "你好啊\r\n"
-    "Accept-Ranges: bytes\r\n"
-        "Content-Length: %d\r\n"
-        "Connection: close\r\n"
-        "Content-Type: %s\r\n\r\n";
+
 
 void handle_signal(int sign); // 退出信号处理
 void http_send(int sock,char *content); // http 发送相应报文
@@ -80,12 +63,21 @@ int main(int argc,char *argv[ ]){
                 memset(buff,0,sizeof(buff));
                 int len = recv(sock_client,buff,sizeof(buff),0);
                 fputs(buff,stdout);
+                printf("sizeof(int)= %ld\n",sizeof(int));
+                printf("sizeof(char)= %ld\n",sizeof(char));
+                printf("sizeof(long)= %ld\n",sizeof(long));
+                printf("sizeof(float)= %ld\n",sizeof(float));
+                printf("sizeof(short)= %ld\n",sizeof(short));
+
+
+                long a[3]={1,2,3}; //在这里发送出byte数组
+                send(sock_client,(char*)a,sizeof(a),0);
                 //send(sock_client,buff,len,0);
                 // char *re = joinString("你好啊",buff);
-                http_send(sock_client,"你好啊");
+                // http_send(sock_client,"你好啊");
                 close(sock_client);
         }
-        fputs("Bye Cleey",stdout);
+        fputs("have a nice day",stdout);
         close(sockfd);
         return 0;
 }
@@ -100,19 +92,7 @@ void http_send(int sock_client,char *content){
 }
 
 void handle_signal(int sign){
-        fputs("\nSIGNAL INTERRUPT \nBye Cleey! \nSAFE EXIT\n",stdout);
+        fputs("\nSIGNAL INTERRUPT \nHave a nice day! \nSAFE EXIT\n",stdout);
         close(sockfd);
         exit(0);
-}
-
-char* joinString(char *s1, char *s2)
-{
-    char *result = malloc(strlen(s1)+strlen(s2)+1);//+1 for the zero-terminator
-    //in real code you would check for errors in malloc here
-	if (result == NULL) exit (1);
- 
-    strcpy(result, s1);
-    strcat(result, s2);
- 
-    return result;
 }

@@ -15,3 +15,8 @@ int file_exits(char * file_path);
 
 const char *readLine(FILE *file);
 
+int file_rename(char *old_path,char* new_path);
+
+//return the file pointer
+int file_create_empty_file(char *filepath);
+

@@ -1,113 +1,12 @@
+[c language api index](http://www.cplusplus.com/reference/cstdio/sprintf/)
 
 [c_stand_library](https://www.tutorialspoint.com/c_standard_library/index.htm)
-
-[<stdlib.h>中定义了两个有用的宏](https://www.gnu.org/software/libc/manual/html_node/Exit-Status.html)
-Macro: int EXIT_SUCCESS
-This macro can be used with the exit function to indicate successful program completion.
-On POSIX systems, the value of this macro is 0. On other systems, the value might be some other (possibly non-constant) integer expression.
-
-Macro: int EXIT_FAILURE
-This macro can be used with the exit function to indicate unsuccessful program completion in a general sense.
-
-On POSIX systems, the value of this macro is 1. On other systems, the value might be some other (possibly non-constant) integer expression. Other nonzero status values also indicate failures. Certain programs use different nonzero status values to indicate particular kinds of "non-success". For example, diff uses status value 1 to mean that the files are different, and 2 or more to mean that there was difficulty in opening the files.
-
-Don’t confuse a program’s exit status with a process’ termination status. There are lots of ways a process can terminate besides having its program finish. In the event that the process termination is caused by program termination (i.e., exit), though, the program’s exit status becomes part of the process’ termination status.
-
- can be used as the argument to the exit function to return unsuccessful or successful termination status, respectively, to the host environment;
-这两个macro(宏)是程序调用exit函数时传入的参数，是给host environment看的
-
-
-
-编译方式
-> gcc 002.c -o 002
-
-或者使用
-> gcc -std=c99 002.c -o 002 
-
-运行方式
-./002
-
-
-### 数组
-数组中的数据类型只能有一种
-
-
-
-### 动态分配内存
-malloc和用于运行期动态分配内存，需要stdlib.h文件声明
-> note: include '<stdlib.h>' or provide a declaration of 'malloc'
-
-```c
-buffer = (char *) malloc(sizeof(char)*fileSize); //接受一个参数，表示需要申请的内存大小
-description = realloc(description,50*sizeof(char)); //接受两个参数，原指针和新的内存大小
-```
-realloc用于重新为指针分配内存
-
-### Structs
-自定义数据类型
-向一个方法传递一个struct的时候，其实是创建了一个新的struct，把旧的值复制进去，所以在方法中操作的其实是一份copy
-使用typedef关键字可以方便后续引用这一数据类型。
-
-```c
-typedef struct product {
-    const char *name;
-    float price;
-    struct product *next;
-
-} product;
-```
-比方说有这样一个struct
-。
-
-```c
-product tomato = {"Tomato",.51,NULL};// 创建一个新的结构体
-product potato = {"potato",1.29,NULL};
-
-tomato.next = &potato;
-
-//一个接受struct的方法的入参应该这么写，因为不使用指针的话，struct会复制一份
-void printLinkedList(product *pProduct){
-     printf(" A %s costs %.2f \n\n",
-        (*pProduct).name, // struct中的值的引用可以用一个星号加上括号包起来
-        pProduct->price);  // 也可以用一个向右的箭头
-        pProduct = pProduct->next;
-}
-```
-
 
 ### Unions,Enums,Linked Lists and Recursive Structures
 一个union一次只能保存一个value
 
-
-### 输入和输出
-```c
-char name[50];
-printf("What is your name? ");
-gets(name); //接受键盘输入，但不检查输入内容是否超过上面的50
-puts("Hi"); //会自动添加换行符
-puts(name);
-puts()函数接受一个字符串,等于打印出这个字符串，另外尾部添加一个换行符
-
-
-//使用fgets更好
- char name[50];
- printf("Wwhat is your name? ");
-
- fgets(name,50,stdin); //三个参数分别是用来存储的char array，最大容量，以及来源(stdin其实就是键盘).
- // 这个函数一直接收键盘输入，直到接收到换行符，或者数组填满了。这个函数会在数组的尾部添加一个换行符
-
- fput("Hi",stdout);//不会自动添加换行符
- fput(name,stdout);
- //
-```
-
-putchar(char )和print差不多,但只接受一个char
-
 ## 函数声明只要放在头部，具体的实现放在main后面也没问题
 只要在main前面声明了函数(返回值，函数名，入参)，把函数实现放在后面也没问题
-
-
-
 
 ### 头文件(header file的作用)
 可以把一些函数的声明写在同名的h文件中，然后在main函数后面完成函数的实现。
@@ -152,13 +51,6 @@ int main(int argc, char *argv[]){
 }
 ```
 
-### define等宏的使用
-```c
-#define ARGC_NUM 3 
-#define SNAP_LEN 65535
-// 这些后面都不需要跟冒号，等于定义了一个int常量
-```
-
 
 ### 工具函数
 ```c
@@ -177,22 +69,6 @@ if(i)
 由于没有boolean类型，0就是false，1是true
 
 
-main函数里面是有参数的，
-```c
-int main(int argc,char *argv[ ]){
-        for(int i=0; i<argc;i++)
-        {
-            printf(" ==== the args in postion %d is %s\n",i,argv[i]);
-        }
-    return 0    
-}
-```
-
-./bin/server 8909 1902 misssyou ##参数之间用空格分开
-==== the args in postion 0 is ./bin/server ## (第一个参数是当前文件的文件路径)
-==== the args in postion 1 is 8909 () ## 依次如下，参数是存放在一个数组里面的
-==== the args in postion 2 is 1902
-==== the args in postion 3 is misssyou
 
 [但是实际应用中都有很成熟的argument parser了](https://stackoverflow.com/questions/9642732/parsing-command-line-arguments) 用Getopt就好了
 

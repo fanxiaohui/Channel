@@ -2,7 +2,7 @@
 ```c
 
 // 打开文件用fopen，接受两个参数
-FILE *pFile; //FILE是stdio文件中定义的变量
+FILE *pFile; //FILE是stdio文件中定义的结构体
 
 pFile = fopen("./tmp/name.bin","wb+"); // 打开或者创建的二进制文件用于写
 
@@ -155,6 +155,7 @@ if( access( fname, F_OK ) != -1 ) {
 ```
 
 读取文件内容的方法,这里分两种
+
 一. 事先知道文件多大
 ```c
 #include <stdio.h>

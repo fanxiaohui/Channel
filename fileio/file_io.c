@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
         exit(1);
     }
     char *filename = "hashes2.txt";
-    char * contents = argv[1];
+    char const *contents = argv[1];
 
     int res ;
     if(file_exits(filename)){

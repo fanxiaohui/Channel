@@ -1,6 +1,7 @@
 [参考](http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/)
 
 假设有这么三份文件
+
 hellomake.c	
 ```c
 #include <hellomake.h>
@@ -92,9 +93,10 @@ $@就是:左边的名字，$^就是:右边的名字
 hellomake: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 就等同于
+```
 hellomake: hellomake.o hellofunc.o
     gcc -o hellomake hellomake.o hellofunc.o -I.
-   
+```   
 对不对？        
 
 ### 第五种，也就是实际项目中用到的

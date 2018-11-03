@@ -10,7 +10,7 @@ typedef struct Books {
     int book_id;
 } Book;
 
-main(int argc, char const *argv[])
+int main(int argc, char const *argv[])
 {
     Book book;
 
@@ -18,7 +18,6 @@ main(int argc, char const *argv[])
     strcpy(book.author,"some author");
     book.subject="this is awesome";
     book.book_id = 130;
-
 
 
     printf("book name is %s \n",book.title);

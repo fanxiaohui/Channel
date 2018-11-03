@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-
-
+#include <string.h>
 
 // write contents to a file ,won't check if exists
 int file_write_string_to_file(char *file_path,char * contents){
@@ -128,4 +127,32 @@ const char *readLine(FILE *file) {
     return constLine;
 }
 
+
+int file_rename(char *old_path,char* new_path){
+    /* rename example */
+  int result;
+  if(!file_exits(old_path)){
+    perror( "old file does't exists!" );
+    return -1;
+  }
+  result= rename( old_path , new_path );
+  if ( result == 0 ){
+    printf("successfully rename %s to %s \n",old_path,new_path);
+    return 1;
+  }
+  else{
+    perror( "Error renaming file" );
+    return 1;
+  }
+}
+
+int file_create_empty_file(char *filepath){
+   FILE *fp = fopen(filepath ,"a");
+   if(fp!=NULL){
+       fclose(fp);
+       return 1;
+   }else {
+       return 0;
+   }
+}
 

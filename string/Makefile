@@ -5,6 +5,11 @@ OBJ = strings.o
 
 # %.o: %.c $(DEPS)
 # 	$(CC) -c -o $@ $< $(CFLAGS)
+default: strsample
+
+strsample: strsample.c
+	$(CC) $^ -o  bin/$@
+
 stringcpy: stringcpy.c
 	${CC} stringcpy.c -o bin/stringcpy
 

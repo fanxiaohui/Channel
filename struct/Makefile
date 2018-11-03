@@ -3,19 +3,14 @@ JSON_C_DIR=/usr/local
 CFLAGS += -I /usr/local/include/json-c
 LDFLAGS+= -L$(JSON_C_DIR)/lib -ljson-c
 
-default: file_io
 
-
-file_io: file_io.c fileutil.c
+struct: struct_sample.c
 	$(CC) $^ -o  bin/$@
-
-jsonsample: json_sample.c
-	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LDFLAGS)
-listdir: list_dir.c
+union: union_sample.c
 	$(CC) $^ -o  bin/$@
-
-filerename: filerename.c fileutil.c
+typedef: typedef_sample.c
 	$(CC) $^ -o  bin/$@	
+
 
 .PHONY: clean 
 
