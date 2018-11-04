@@ -10,7 +10,8 @@ union: union_sample.c
 	$(CC) $^ -o  bin/$@
 typedef: typedef_sample.c
 	$(CC) $^ -o  bin/$@	
-
+struct_initialize: struct_initialize.c
+	$(CC) $^ -o  bin/$@	
 
 .PHONY: clean 
 

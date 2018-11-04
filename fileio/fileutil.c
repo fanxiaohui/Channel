@@ -156,3 +156,11 @@ int file_create_empty_file(char *filepath){
    }
 }
 
+int file_remove_file(char *filepath){
+    if( remove(filepath) != 0 )
+    perror( "Error deleting file" );
+  else
+    puts( "File successfully deleted" );
+  return 0;
+}
+

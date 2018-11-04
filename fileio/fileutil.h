@@ -20,3 +20,6 @@ int file_rename(char *old_path,char* new_path);
 //return the file pointer
 int file_create_empty_file(char *filepath);
 
+//remove file
+int file_remove_file(char *filepath);
+

@@ -21,7 +21,7 @@ d = p(p(a, b), c);
 
 //没错，指针也是数字，也能放在if里面
 ```c
-char * line 
+char * line;
 if(line)
 {
     free(line);

@@ -11,7 +11,7 @@ typedef struct a
     char c;
 } A;
 ```
-接下来使用的时候就用A了而不用struct a了。
+接下来使用的时候可以用A也可以用struct a
 
 
 
@@ -43,5 +43,51 @@ void printLinkedList(product *pProduct){
         (*pProduct).name, // struct中的值的引用可以用一个星号加上括号包起来
         pProduct->price);  // 也可以用一个向右的箭头
         pProduct = pProduct->next;
+}
+```
+
+
+struct的初始化方式有三种
+```c
+#include <stdio.h>
+ 
+struct student_st
+{
+	char c;
+	int score;
+	const char *name;
+};
+ 
+static void show_student(struct student_st *stu)
+{
+	printf("c = %c, score = %d, name = %s\n", stu->c, stu->score, stu->name);
+}
+ 
+int main(void)
+{
+	// method 1: 按照成员声明的顺序初始化
+	struct student_st s1 = {'A', 91, "Alan"};
+	show_student(&s1);
+ 
+	// method 2: 指定初始化，成员顺序可以不定，Linux 内核多采用此方式
+	struct student_st s2 = 
+	{
+		.name = "YunYun",
+		.c = 'B',
+		.score = 92,
+	};
+	show_student(&s2);
+ 
+	// method 3: 不推荐。指定初始化，成员顺序可以不定.
+    // 编译器会警告 use of GNU old-style field designator extension
+	struct student_st s3 = 
+	{
+		c: 'C',
+		score: 93,
+		name: "Wood",
+	};
+	show_student(&s3);
+	
+	return 0;
 }
 ```
