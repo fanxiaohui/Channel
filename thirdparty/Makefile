@@ -9,6 +9,8 @@ default: jsonsample
 jsonsample: json_sample.c
 	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LDFLAGS)
 
+libevent_sample : libevent-server.c
+	$(CC) $^ -o  bin/$@ -I /usr/local/include/event2 -L/usr/local/lib -levent
 
 .PHONY: clean 
 

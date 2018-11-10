@@ -74,6 +74,8 @@ gcc -L/home/username/foo -Wl,-rpath=/home/username/foo -Wall -o test main.c -lfo
 This is a shared library test...
 Hello, I'm a shared library
 
+-Wl… 是 gcc 傳給 static linker 的參數，參閱 [man ld](http://man7.org/linux/man-pages/man1/ld.1.html)。
+
 以上就是创建，链接，使用.so库的方式，如果想要让系统上的所有人都能使用我们的库怎么办呢？首先这需要admin权限
 接下来把我们刚才的.so文件复制到特定的文件夹里(/usr/lib或者/usr/local/lib。这俩文件夹一般都需要管理员权限的)
 cp /home/username/foo/libfoo.so /usr/lib

@@ -210,7 +210,7 @@ free(source); /* Don't forget to call free() later! */
 ```
 
 
-c语言没有现现成的readline方法，但是也[没有必要去重新发明readline方法](https://stackoverflow.com/questions/3501338/c-read-file-line-by-line)
+c语言没有现成的readline方法，但是也[没有必要去重新发明readline方法](https://stackoverflow.com/questions/3501338/c-read-file-line-by-line)
 ```c
 #define _GNU_SOURCE
 #include <stdio.h>
