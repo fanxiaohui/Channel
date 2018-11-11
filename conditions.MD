@@ -10,3 +10,4 @@ if (flag == 4)
     break;
 length += len;
 ```        
+由于没有boolean类型，0就是false，1是true
