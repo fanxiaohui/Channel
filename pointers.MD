@@ -19,4 +19,18 @@ description = realloc(description,50*sizeof(char)); //接受两个参数，原�
 realloc用于重新为指针分配内存
 calloc会在分配内存的同时帮忙初始化为0
 
+```c
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
+#define DEFAULT_FILE "sample.txt"
+char filename[80];
+
+memset(filename, 0, sizeof(filename));
+strcpy(filename, DEFAULT_FILE); //这样会segmentfalut的（从一个不存在的src去读）
+strcpy(filename, &DEFAULT_FILE); //如果没有初始化filename的话，这也会崩(写进一个不存在的dst)
+//因为strcpy的第二个参数是字符串的指针，"sample.txt"这个字符串的实际值被拿来当指针，指向了一段不存在的内存，自然会崩。 Crash or “segmentation fault” when data is copied/scanned/read to an uninitialized pointer 
+strcpy(filename, &DEFAULT_FILE);//这样就不会崩了
+
+```

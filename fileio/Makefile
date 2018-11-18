@@ -17,6 +17,9 @@ listdir: list_dir.c
 filerename: filerename.c fileutil.c
 	$(CC) $^ -o  bin/$@	
 
+filestat: filestat.c
+	$(CC) $^ -o  bin/$@		
+
 .PHONY: clean 
 
 clean:
