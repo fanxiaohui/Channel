@@ -4,4 +4,6 @@ bin/
 *.exe
 .vs
 *.o
+_build
+_install
 

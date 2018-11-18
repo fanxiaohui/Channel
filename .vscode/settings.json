@@ -16,6 +16,8 @@
         "hellomake.h": "c",
         "host_to_ip.h": "c",
         "types.h": "c",
-        "fileutil.h": "c"
+        "fileutil.h": "c",
+        "ios": "c",
+        "test.h": "c"
     }
 }

@@ -29,6 +29,7 @@ export LDFLAGS=-L/usr/local/opt/openssl/lib
 [libevent文档](http://www.wangafu.net/~nickm/libevent-book/)
 libevent是一个事件触发的网络库，适用于windows、Linux、bsd等多种平台，内部使用select、epoll、kqueue等系统调用管理事件机制。著名分布式缓存软件memcached也是libevent based，而且libevent在使用上可以做到跨平台
 
+Libevent 中，事件循环是围绕着event_base结构体进行的
 
 基本的socket编程是阻塞/同步的，每个操作除非已经完成或者出错才会返回，这样对于每一个请求，要使用一个线程或者单独的进程去处理，系统资源没法支撑大量的请求（所谓c10k problem?），例如内存：默认情况下每个线程需要占用2～8M的栈空间。posix定义了可以使用异步的select系统调用，但是因为其采用了轮询的方式来判断某个fd是否变成active，效率不高[O(n)]，连接数一多，也还是撑不住。于是各系统分别提出了基于异步/callback的系统调用，例如Linux的epoll，BSD的kqueue，Windows的IOCP。由于在内核层面做了支持，所以可以用O(1)的效率查找到active的fd。基本上，libevent就是对这些高效IO的封装，提供统一的API，简化开发。
 libevent大概是这样的：
@@ -37,17 +38,22 @@ libevent大概是这样的：
 
 
 //创建一个event_base 
-struct event_base *base = event_base_new(); 
-assert(base != NULL); 
+struct event *event_new(struct event_base *base, // 事件循环
+                        evutil_socket_t fd,      // 文件描述符
+                        short what,              // 事件类型
+                        event_callback_fn cb,    // 回调函数
+                        void *arg);              // 传递给回调函数的参数
 
-//创建并绑定一个event 
-struct event *listen_event; 
-//参数：event_base, 监听的fd，事件类型及属性，绑定的回调函数，给回调函数的参数 
-listen_event = event_new(base, listener, EV_READ|EV_PERSIST, callback_func, (void*)base); 
-//参数：event，超时时间(struct timeval *类型的，NULL表示无超时设置) 
-event_add(listen_event, NULL); 
+//创建一个event并把它加入到事件循环中
+int event_add(struct event *ev,             // 事件
+              const struct timeval *tv);    // 超时时间
+
 
 //启动事件循环 
 event_base_dispatch(base); 
+
+默认情况下，当一个事件变得活跃时，Libevent 会执行这个事件的回调函数，但同时也会将这个事件从事件循环中移除。那要怎么样才能让事件不被移除呢？当创建事件时，在事件类型加上EV_PERSIST就可以
+event_new(base, -1, EV_TIMEOUT|EV_PERSIST, timer_cb, (void *)&str);
+
 
 
