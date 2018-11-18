@@ -25,6 +25,13 @@ export LDFLAGS=-L/usr/local/opt/openssl/lib
 ./configure
 ./make
 
+[ibm的一篇文章中介绍了应对大量连接的常用解决方案](https://www.ibm.com/developerworks/aix/library/au-libev/index.html)
+Round-robin: The early systems use a simple solution of round-robin selection, simply iterating over a list of open network connections and determining whether there is any data to read. This is both slow (especially as the number of connections increases) and inefficient (since other connections may be sending requests and expecting responses while you are servicing the current one). The other connections have to wait while you iterate through each one. If you have 100 connections and only one has data, you still have to work through the other 99 to get to the one that needs servicing.
+
+poll, epoll, and variations: This uses a modification of the round-robin approach, using a structure to hold an array of each of the connections to be monitored, with a callback mechanism so that when data is identified on a network socket, the handling function is called. The problem with poll is that the size of the structure can be quite large, and modifying the structure as you add new network connections to the list can increase the load and affect performance.
+
+select: The select() function call uses a static structure, which had previously been hard-coded to a relatively small number (1024 connections), which makes it impractical for very large deployments.
+
 
 [libevent文档](http://www.wangafu.net/~nickm/libevent-book/)
 libevent是一个事件触发的网络库，适用于windows、Linux、bsd等多种平台，内部使用select、epoll、kqueue等系统调用管理事件机制。著名分布式缓存软件memcached也是libevent based，而且libevent在使用上可以做到跨平台
@@ -57,3 +64,4 @@ event_new(base, -1, EV_TIMEOUT|EV_PERSIST, timer_cb, (void *)&str);
 
 
 
+[libevent内置了http功能，还有dns这类](http://www.voidcn.com/article/p-tvsexrgk-pz.html)

@@ -17,3 +17,6 @@ buffer = (char *) malloc(sizeof(char)*fileSize); //接受一个参数，表示�
 description = realloc(description,50*sizeof(char)); //接受两个参数，原指针和新的内存大小
 ```
 realloc用于重新为指针分配内存
+calloc会在分配内存的同时帮忙初始化为0
+
+

@@ -48,6 +48,9 @@ stringcspn: stringcspn.c
 
 stringerror: stringerror.c
 	${CC} $^ -o  bin/$@	
+
+stringmalloc: stringmalloc.c
+	$(CC) $^ -o  bin/$@	
 		
 # strings: $(OBJ)
 # 	$(CC) -c -o $@ $^ $(CFLAGS)

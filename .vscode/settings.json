@@ -18,6 +18,9 @@
         "types.h": "c",
         "fileutil.h": "c",
         "ios": "c",
-        "test.h": "c"
+        "test.h": "c",
+        "libevent-hostcheck.h": "c",
+        "evhttp.h": "c",
+        "bufferevent.h": "c"
     }
 }

@@ -15,6 +15,13 @@ libevent-server : libevent-server.c
 libevent-helloworld : libevent-helloworld.c
 	$(CC) $^ -o  bin/$@ -I /usr/local/include/event2 -L/usr/local/lib -levent
 
+libevent-httpclient : libevent-httpclient.c
+	$(CC) $^ -o  bin/$@ -I /usr/local/include/event2 -L/usr/local/lib -levent
+
+libevent-async-query-dns : libevent-async-query-dns.c
+	$(CC) $^ -o  bin/$@ -I /usr/local/include/event2 -L/usr/local/lib -levent
+
+
 .PHONY: clean 
 
 clean:

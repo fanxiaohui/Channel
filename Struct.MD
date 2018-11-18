@@ -91,3 +91,15 @@ int main(void)
 	return 0;
 }
 ```
+
+因为malloc出来的内存里面可能存在各种垃圾值，所以需要设置一下初始值
+```c
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node *n1 = malloc(sizeof(struct node));
+n1->data = 0;
+n1->next = NULL;
+```

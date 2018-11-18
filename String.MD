@@ -67,6 +67,19 @@ error: assignment to expression with array type
 所以想要修改一个字符串的内容，需要使用strcpy函数，或者使用字符串。
 
 另外，使用数组创建的字符串尾部会被编译器自动添加一个 "\0"，使用指针的不会。
+
+使用malloc的方式操作string通常需要在malloc之后memset一下
+```c
+char * src = "awesome";
+printf("sizeof src = %ld\n",sizeof(src)); //8
+printf("strlen of src = %ld\n",strlen(src)); //7
+
+char * copy_of = (char *)malloc(sizeof(src)*sizeof(char));//创建出来的是大小为8的char数组
+memset(copy_of,0,sizeof(char) * sizeof(copy_of)); //malloc出来的内存里面可能装着一些随机的垃圾数据，因为malloc并不负责帮你初始化(calloc可以帮忙初始化，但性能有问题)。所以常常看到malloc后面跟着就写memset。
+strcpy(copy_of,src);
+printf("copied result is %s\n",copy_of); //copied result is awesome
+```
+
 ```c
 const char  firstname[] = "bobby";
 const char* lastname = "eraserhead";
