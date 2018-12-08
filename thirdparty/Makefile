@@ -1,6 +1,6 @@
 CC=gcc
 JSON_C_DIR=/usr/local
-CFLAGS += -I /usr/local/include/json-c
+CFLAGS += -Wall -std=c99 -I /usr/local/include/json-c
 LDFLAGS+= -L$(JSON_C_DIR)/lib -ljson-c
 
 default: jsonsample

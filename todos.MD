@@ -17,5 +17,3 @@ int转string
 
 
 
-
-有没有那种类似于 a!=null的判断，不然每次都segmentfault很烦人啊。
