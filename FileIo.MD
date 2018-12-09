@@ -1,6 +1,38 @@
 ## 文件读写
-```c
 
+
+一切皆是文件是 Unix/Linux 的基本哲学之一
+不仅普通的文件，目录、字符设备、块设备、 套接字等在 Unix/Linux 中都是以文件被对待；
+它们虽然类型不同，但是对其提供的却是同一套操作界面
+
+文件操作的流程：打开文件 -> 读写文件 -> 关闭文件
+
+最简单的一个读取文件内容的程序长这样，一个字符一个字符的读取
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+    FILE *fp = fopen("foo.txt", "r");
+    if(fp == NULL){
+        printf("IO ERROR!\n");
+        exit(1);
+    }
+    char ch;
+    while((ch = fgetc(fp)) != EOF){
+        printf("%c", ch);
+    }
+    fclose(fp);
+    return 0;
+}
+```
+
+有两个不常用的函数
+int feof(FILE *fp)：当指向文件末尾时，返回非零值(true)，否则返回零值(false)
+int ferror(FILE *fp)：当文件操作出错是，返回非零值(true)，否则返回零值(false)
+
+
+```c
 // 打开文件用fopen，接受两个参数
 FILE *pFile; //FILE是stdio文件中定义的结构体
 

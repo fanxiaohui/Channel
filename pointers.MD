@@ -3,6 +3,9 @@
 [What is the size of a pointer in C?](https://stackoverflow.com/questions/916051/are-there-any-platforms-where-pointers-to-different-types-have-different-sizes)
 另外，指针的类型一旦确定就不能再更改。
 
+
+编译环境是 64bit 系统，所以一个指针变量的长度为 64bit / 8bit = 8个字节. 64位和32位系统就是这么来的，就是内存寻址的范围
+
 有没有那种类似于 a!=null的判断，不然每次都segmentfault很烦人啊。
 这个涉及到野指针和迷途指针（悬垂指针），前者是指刚创建的指针变量不会被自动设为NULL指针，默认值是瞎分配的。后者是指指针指向的对象呗收回，但是对这个指针却没有做任何修改，所以这个指针指向的地方是已经被回收的地址。通常，程序往迷途指针指向的内存地址写入数据，会导致不可预料的程序错误。在linux上通常导致段错误，在Windows上导致一般保护错误。
 
