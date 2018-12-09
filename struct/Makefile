@@ -13,6 +13,8 @@ typedef: typedef_sample.c
 struct_initialize: struct_initialize.c
 	$(CC) $(CFLAGS) $^ -o  bin/$@	
 
+checkendian: checkendian.c
+	$(CC) $^ -o  bin/$@	
 .PHONY: clean 
 
 clean:

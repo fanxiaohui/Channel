@@ -20,6 +20,18 @@ filerename: filerename.c fileutil.c
 filestat: filestat.c
 	$(CC) $^ -o  bin/$@		
 
+simple_read: simple_read.c
+	$(CC) $^ -o  bin/$@		
+
+read_line_by_line: read_line_by_line.c
+	$(CC) $^ -o  bin/$@		
+	
+simple_write: simple_write.c
+	$(CC) $^ -o  bin/$@		
+
+simple_file_size: simple_file_size.c
+	$(CC) $^ -o  bin/$@		
+
 .PHONY: clean 
 
 clean:
