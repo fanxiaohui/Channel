@@ -8,6 +8,8 @@
 
 - [make file怎么写](https://github.com/Haldir65/Channel/blob/master/HowTowriteMakeFile.MD)
 
+- [多进程和多线程](https://github.com/Haldir65/Channel/blob/master/process_and_threads.MD)
+
 
 - [结构体的使用方式](https://github.com/Haldir65/Channel/blob/master/Struct.MD)
 
