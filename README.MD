@@ -10,10 +10,14 @@
 
 - [多进程和多线程](https://github.com/Haldir65/Channel/blob/master/process_and_threads.MD)
 
+- [socket相关的函数](https://github.com/Haldir65/Channel/blob/master/socket.MD)
 
 - [结构体的使用方式](https://github.com/Haldir65/Channel/blob/master/Struct.MD)
 
 - [文件I/O操作](https://github.com/Haldir65/Channel/blob/master/FileIo.MD)
+
+- [C语言中如何创建和使用第三方库](https://github.com/Haldir65/Channel/blob/master/howToUseLibraryInC.MD)
+
 
 - [但是实际应用中都有很成熟的argument parser了，用Getopt就好了](https://stackoverflow.com/questions/9642732/parsing-command-line-arguments) 
 
