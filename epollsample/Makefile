@@ -9,6 +9,8 @@ default: randomsample
 server: server.c
 	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LDFLAGS)
 
+polling_server: polling_server.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LDFLAGS)
 
 client: client.c
 	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LDFLAGS)

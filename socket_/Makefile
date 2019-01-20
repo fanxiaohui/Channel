@@ -35,8 +35,22 @@ simple_httpserver: simple_httpserver.c
 stringhexvalue: stringhexvalue.c
 	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
 
+ping_raw_socket: ping_raw_socket.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
 socket_server: socket_server.c
 	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
+rawsocket_packet_capture: rawsocket_packet_capture.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
+rawsocket_packet_capture2: rawsocket_packet_capture2.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
+
+rawsocket_packet_capture2_client: rawsocket_packet_capture2_client.c
+	$(CC) $^ -o  bin/$@ $(CFLAGS) $(LIBS)
+
 
 .PHONY: clean
 
