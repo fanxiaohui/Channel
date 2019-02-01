@@ -8,11 +8,11 @@
 int main(int argc, char const *argv[],char *envp[])
 {
    
-    int env_size = sizeof(envp)/sizeof(char);
-    printf("environemnt variables length is %d\n",env_size);
-    for(int i=0 ; i<env_size; i++){
-        printf("variable at index %d is %s\n",i,envp[i]);
-    }
+    // int env_size = sizeof(envp)/sizeof(char);
+    // printf("environemnt variables length is %d\n",env_size);
+    // for(int i=0 ; i<env_size; i++){
+    //     printf("variable at index %d is %s\n",i,envp[i]);
+    // }
     pid_t fpid = fork(), pid;
 
 

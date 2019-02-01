@@ -43,6 +43,27 @@ ipc_via_pipe: ipc_via_pipe.c
 ipc_two_pipes: ipc_two_pipes.c
 	$(CC) $^ -o  bin/$@	
 
+execvesample: execvesample.c
+	$(CC) $^ -o  bin/$@	
+
+atexit_sample: atexit_sample.c
+	$(CC) $^ -o  bin/$@	
+
+popensample: popensample.c
+	$(CC) $^ -o  bin/$@	
+
+
+using_signal: using_signal.c
+	$(CC) $^ -o  bin/$@		
+
+receiver: receiver.c
+	$(CC) $^ -o  bin/$@	
+	
+sender: sender.c
+	$(CC) $^ -o  bin/$@		
+
+sem_and_signal: sem_and_signal.c
+	$(CC) $^ -o  bin/$@				
 
 .PHONY: clean 
 

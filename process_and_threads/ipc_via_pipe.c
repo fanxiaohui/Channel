@@ -16,7 +16,7 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
 
-    pid_t pid = fork();
+    __pid_t pid = fork();
     if(pid < 0){
         perror("fork");
         exit(EXIT_FAILURE);
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
         strcpy(buf, argv[1]);
         write(pipes[1], buf, strlen(buf));
 
-        sleep(1);
+        sleep(1); 
 
         nbuf = read(pipes[0], buf, BUFSIZ);
         buf[nbuf] = 0;
@@ -39,8 +39,10 @@ int main(int argc, char *argv[]){
         int nbuf = read(pipes[0], buf, BUFSIZ);
         buf[nbuf] = 0;
         printf("child_proc(%d) recv_from_parent: %s\n", getpid(), buf);
-
+        char msg[BUFSIZ];
         strcpy(buf, argv[2]);
+        strcat(buf," ｉ hereby acknowledge your  message");
+        strcat(msg,buf);
         write(pipes[1], buf, strlen(buf));
 
         close(pipes[0]);
@@ -49,3 +51,5 @@ int main(int argc, char *argv[]){
 
     return 0;
 }
+
+

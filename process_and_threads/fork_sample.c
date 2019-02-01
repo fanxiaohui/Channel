@@ -4,6 +4,12 @@
 #include <string.h>
 #include <unistd.h>
 
+void print_process_message(){
+    __pid_t myprocess_id = getpid();
+    __uid_t uid = getuid();
+    __gid_t ugid = getgid();
+    printf("getpid = %d getuid= %d  getgid= %d \n",myprocess_id,uid, ugid);
+}
 
 int main(int argc, char const *argv[])
 {
@@ -27,6 +33,7 @@ int main(int argc, char const *argv[])
         n--;
         printf("parent_proc(%d): n= %d\n",getpid(),n);
     }
+    print_process_message();
     printf("quit_proc(%d) ...\n",getpid());
 
 

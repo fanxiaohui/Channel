@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
+#include <sys/sem.h>
+
 
 #define FILENAME "/dev/null"
 
@@ -17,6 +19,7 @@ int main(int argc, char *argv[]){
 
     key_t shm_key = ftok(FILENAME, 0);
     int shm_size = getpagesize();
+    printf("current page size is %d\n", shm_size);
     int shm_id = shmget(shm_key, shm_size, 0644 | IPC_CREAT);
 
     if(shm_id == -1){
