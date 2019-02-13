@@ -84,6 +84,13 @@ ldconfig //让ldconfig刷新一下缓存
 ldconfig -p | grep foo
 libfoo.so (libc6) => /usr/lib/libfoo.so
 
+>原来:Linux是通过 /etc/ld.so.cache 文件搜寻要链接的动态库的。
+而 /etc/ld.so.cache 是 ldconfig 程序读取 /etc/ld.so.conf 文件生成的。
+（注意， /etc/ld.so.conf 中并不必包含 /lib 和 /usr/lib，ldconfig程序会自动搜索这两个目录）
+
+如果我们把 libmax.so 所在的路径添加到 /etc/ld.so.conf 中，再以root权限运行ldconfig 程序，更新/etc/ld.so.cache ，test运行时，就可以找到libmax.so。
+
+
 以上完成之后
 gcc -Wall -o test main.c -lfoo //因为现在在/usr/lib里面已经有我们之前复制过去的so文件了。
 $ ldd test | grep foo //ldd类似于查看二进制文件，就是确认下这个可执行文件用的是不是我们刚才复制过去的libfoo.so
